@@ -14,8 +14,14 @@ func TestNoServerDependencies(t *testing.T) {
 		t.Fatalf("go list: %v", err)
 	}
 	for _, pkg := range strings.Fields(string(out)) {
-		if strings.HasPrefix(pkg, "github.com/grokify/academyos") || strings.HasPrefix(pkg, "entgo.io/") || strings.HasPrefix(pkg, "github.com/plexusone/systemforge") {
+		if inModule(pkg, "github.com/academyosio/academyos") || strings.HasPrefix(pkg, "entgo.io/") || strings.HasPrefix(pkg, "github.com/plexusone/systemforge") {
 			t.Errorf("depends on server package %s", pkg)
 		}
 	}
+}
+
+// inModule reports whether pkg is module m or one of its packages, so
+// github.com/academyosio/academyos doesn't match academyos-go itself.
+func inModule(pkg, m string) bool {
+	return pkg == m || strings.HasPrefix(pkg, m+"/")
 }
