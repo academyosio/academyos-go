@@ -53,7 +53,7 @@ The SDK uses these AcademyOS endpoints. The server side is specified with Academ
 
 | Call | Endpoint | Purpose |
 | --- | --- | --- |
-| `Me` | `GET /api/v1/me` | The key's person, academy, scopes, and expiry |
+| `Me` | `GET /api/v1/users/me` | The key's person, academies and roles, and the key's academy, scopes, and expiry |
 | `GetPackage` | `GET /api/v1/organizations/{org}/courses/{courseId}/package` | The current manifest and its revision |
 | `PutPackage` | `PUT /api/v1/organizations/{org}/courses/{courseId}/package` | Propose a manifest; returns missing checksums, or applies it |
 | `PutFile` | `PUT /api/v1/organizations/{org}/files/{sha256}` | Upload one file; the server checks the hash |
