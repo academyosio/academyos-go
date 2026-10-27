@@ -1,0 +1,15 @@
+{
+  "id": "final-assessment-quiz",
+  "title": "Final Assessment",
+  "passPercentage": 80,
+  "questions": [
+    {
+      "id": "f1",
+      "type": "trueFalse",
+      "lesson": "resources",
+      "prompt": "Resources are nouns.",
+      "correctAnswer": true,
+      "explanation": "Resources name things; methods are the verbs."
+    }
+  ]
+}

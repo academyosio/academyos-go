@@ -1,0 +1,13 @@
+{
+  "version": "1.0",
+  "metadata": {"title": "Designing Endpoints", "defaultLanguage": "en-US", "defaultVoice": {"voiceId": "x"}},
+  "slides": [
+    {"id": "title", "index": 0, "transcripts": {
+      "en-US": {"segments": [{"text": "Welcome to designing endpoints.", "pause": 500}]},
+      "es-ES": {"segments": [{"text": "Bienvenido al diseño de endpoints."}]}}},
+    {"id": "resources", "index": 1, "transcripts": {
+      "es-ES": {"segments": [{"text": "Una API es un conjunto de recursos."}]}}},
+    {"id": "methods", "index": 2, "transcripts": {
+      "es-ES": {"segments": [{"text": "GET lee un recurso."}, {"text": "PUT lo reemplaza."}]}}}
+  ]
+}

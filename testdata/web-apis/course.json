@@ -1,0 +1,17 @@
+{
+  "specVersion": "1",
+  "id": "building-web-apis",
+  "version": "1.0.0",
+  "title": "Building Web APIs",
+  "summary": "Design, build, and operate an HTTP API.",
+  "languages": ["en-US", "es-ES"],
+  "access": "open",
+  "authors": [{"name": "Jane Author"}],
+  "theme": "theme",
+  "certificate": {"enabled": true, "requires": "allQuizzes"},
+  "sections": [
+    {"path": "sections/01-designing-endpoints"},
+    {"path": "sections/02-final-assessment"},
+    {"path": "sections/03-versioning", "released": false, "id": "versioning", "title": "Versioning"}
+  ]
+}

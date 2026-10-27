@@ -1,0 +1,9 @@
+{
+  "id": "designing-endpoints",
+  "title": "Designing Endpoints",
+  "source": {"type": "htmlDeck", "path": "deck/index.html"},
+  "lessons": [
+    {"id": "resources", "objectives": ["Model a domain as resources"], "free": true},
+    {"id": "glossary", "type": "text", "title": "Glossary", "content": "text/glossary.md", "after": "resources"}
+  ]
+}

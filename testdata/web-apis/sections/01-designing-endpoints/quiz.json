@@ -1,0 +1,35 @@
+{
+  "id": "designing-endpoints-quiz",
+  "title": "Designing Endpoints Quiz",
+  "passPercentage": 70,
+  "allowRetry": true,
+  "showFeedback": true,
+  "questions": [
+    {
+      "id": "q1-idempotent",
+      "type": "multipleChoice",
+      "lesson": "methods",
+      "prompt": "Which methods are idempotent?",
+      "options": [
+        {"id": "a", "text": "GET", "correct": true},
+        {"id": "b", "text": "POST", "correct": false},
+        {"id": "c", "text": "PUT", "correct": true}
+      ],
+      "explanation": "GET and PUT can be repeated with the same result; POST can't."
+    },
+    {
+      "id": "q2-404",
+      "type": "trueFalse",
+      "prompt": "A 404 means the server failed.",
+      "correctAnswer": false,
+      "explanation": "404 means the resource wasn't found."
+    },
+    {
+      "id": "q3-created",
+      "type": "shortAnswer",
+      "prompt": "Which status code means Created?",
+      "acceptedAnswers": ["201", "201 Created"],
+      "explanation": "201 Created, with a Location header."
+    }
+  ]
+}
