@@ -1,0 +1,12 @@
+# Build output
+/bin/
+/dist/
+
+# Test and coverage output
+*.out
+coverage.*
+
+# IDE and OS
+.idea/
+.vscode/
+.DS_Store
