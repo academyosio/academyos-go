@@ -11,13 +11,13 @@ commits implementing one carry the trailer `Refs: RMI-ACADEMYOSGO-<NNN>`.
 
 **Theme:** A course-spec directory goes to an academy in one command.
 
-- [ ] `RMI-ACADEMYOSGO-001` Client options, the production default and URL override, the HTTPS rule, typed errors, and `Me`
-- [ ] `RMI-ACADEMYOSGO-002` Course packages: the files a course-spec directory needs, checksums, the package root for shared themes, and size limits
-- [ ] `RMI-ACADEMYOSGO-003` Push: local validation, uploading only missing files, dry runs, prune, stale-copy refusal, and the academy's IDs written to `published.json`
+- [x] `RMI-ACADEMYOSGO-001` Client options, the production default and URL override, the HTTPS rule, typed errors, and `Me`
+- [x] `RMI-ACADEMYOSGO-002` Course packages: the files a course-spec directory needs, checksums, the package root for shared themes, and size limits
+- [x] `RMI-ACADEMYOSGO-003` Push: local validation, uploading only missing files, dry runs, prune, stale-copy refusal, and the academy's IDs written to `published.json`
   - Depends on: `RMI-ACADEMYOSGO-001`, `RMI-ACADEMYOSGO-002`
-- [ ] `RMI-ACADEMYOSGO-004` `academyos` CLI: `whoami`, `course validate`, `course push`, `course publish`, text and JSON output, and exit codes
+- [x] `RMI-ACADEMYOSGO-004` `academyos` CLI: `whoami`, `course validate`, `course push`, `course publish`, text and JSON output, and exit codes
   - Depends on: `RMI-ACADEMYOSGO-003`
-- [ ] `RMI-ACADEMYOSGO-005` Dependency test: no AcademyOS server packages in the module's dependencies
+- [x] `RMI-ACADEMYOSGO-005` Dependency test: no AcademyOS server packages in the module's dependencies
   - Depends on: `RMI-ACADEMYOSGO-001`
 
 ## Phase 2 — Round Trip and Release
