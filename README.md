@@ -32,6 +32,9 @@ academyos course validate <dir>        # check a course; exits 2 on errors
 academyos course push <dir>            # validate, upload what the academy lacks, apply
 academyos course push --dry-run <dir>  # report what would change
 academyos course publish <dir>         # publish the course
+academyos pronunciations push [path]   # replace the academy's pronunciations
+academyos pronunciations push --dry-run [path]  # list what would change
+academyos pronunciations get           # print the academy's pronunciations
 academyos version
 ```
 
@@ -43,6 +46,14 @@ writes the academy's IDs and revision to the course's `published.json`.
 Commit that file: the next push sends the revision, and if the course
 changed in the academy since then, the push is refused instead of
 overwriting those edits.
+
+`pronunciations push` sends a `pronunciations.json`, by default the one in
+the current directory, usually the course repository's root, as the
+academy's pronunciations. Narration applies a course's own
+`pronunciations.json` first, then the academy's, then the platform's, so a
+term shared by several courses belongs at the root. The push lists the
+terms added, changed and removed, and removes from the academy any term the
+file leaves out. An empty respelling says the term as written.
 
 Exit codes:
 
@@ -71,6 +82,10 @@ Add this to the course repository's `CLAUDE.md` or `AGENTS.md`:
   using --force.
 - Never change a published lesson's ID (a slide's data-id with
   data-lesson); learner progress is keyed by it.
+- Pronunciations shared by several courses go in the repository's root
+  `pronunciations.json`; push them with `academyos pronunciations push`
+  (try `--dry-run` first). A course's own `pronunciations.json` wins over
+  the academy's.
 - Use --format json when you need to read the output.
 ```
 

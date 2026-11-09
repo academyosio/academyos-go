@@ -42,3 +42,4 @@ commits implementing one carry the trailer `Refs: RMI-ACADEMYOSGO-<NNN>`.
 - [ ] `RMI-ACADEMYOSGO-011` MCP server over the SDK
 - [ ] `RMI-ACADEMYOSGO-012` Device sign-in, so authors don't handle keys
 - [ ] `RMI-ACADEMYOSGO-013` Narration review from the command line: list, approve, and request changes per slide
+- [ ] `RMI-ACADEMYOSGO-014` Academy pronunciations: push a repository's root `pronunciations.json` as the academy's (`RMI-ACADEMYOS-070`), showing the terms added, changed and removed, with a dry run, and print the academy's
