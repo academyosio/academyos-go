@@ -75,7 +75,9 @@ func New(opts Options) (*Client, error) {
 func (c *Client) BaseURL() string { return c.base.String() }
 
 func isLoopback(host string) bool {
-	if host == "localhost" {
+	// Names under .localhost resolve to loopback (RFC 6761), such as
+	// app.localhost in a local deployment with one host per component.
+	if host == "localhost" || strings.HasSuffix(host, ".localhost") {
 		return true
 	}
 	ip := net.ParseIP(host)

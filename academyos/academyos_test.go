@@ -28,6 +28,8 @@ func TestNew(t *testing.T) {
 		{"", true},
 		{"https://example.com", true},
 		{"http://localhost:8080", true},
+		{"http://app.localhost:8081", true},
+		{"http://localhost.example.com", false},
 		{"http://127.0.0.1:8080", true},
 		{"http://[::1]:8080", true},
 		{"http://example.com", false},

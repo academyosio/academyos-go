@@ -74,7 +74,7 @@ func (c *Client) Push(ctx context.Context, dir string, opts PushOptions) (*PushR
 	if err != nil {
 		return nil, err
 	}
-	org, err := c.resolveOrg(ctx, opts.Org)
+	org, err := c.ResolveOrg(ctx, opts.Org)
 	if err != nil {
 		return nil, err
 	}
@@ -172,8 +172,8 @@ func (c *Client) uploadOne(ctx context.Context, org string, pkg *coursepkg.Packa
 	return nil
 }
 
-// resolveOrg returns org, or the API key's academy when org is empty.
-func (c *Client) resolveOrg(ctx context.Context, org string) (string, error) {
+// ResolveOrg returns org, or the API key's academy when org is empty.
+func (c *Client) ResolveOrg(ctx context.Context, org string) (string, error) {
 	me, err := c.Me(ctx)
 	if err != nil {
 		return "", err
@@ -198,7 +198,7 @@ func (c *Client) PublishCourse(ctx context.Context, dirOrID, org string) (string
 	} else if !errors.Is(err, os.ErrNotExist) {
 		return "", "", err
 	}
-	org, err := c.resolveOrg(ctx, org)
+	org, err := c.ResolveOrg(ctx, org)
 	if err != nil {
 		return "", "", err
 	}

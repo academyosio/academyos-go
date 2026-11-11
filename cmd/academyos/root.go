@@ -46,7 +46,7 @@ func newRootCommand() *cobra.Command {
 	root.PersistentFlags().StringVar(&g.apiURL, "api-url", "", "AcademyOS server (default $ACADEMYOS_API_URL, else "+academyos.DefaultBaseURL+")")
 	root.PersistentFlags().StringVar(&g.org, "org", "", "academy slug (default: the API key's academy)")
 	root.PersistentFlags().StringVar(&g.format, "format", "text", "output format: text or json")
-	root.AddCommand(newWhoamiCommand(g), newCourseCommand(g), newVersionCommand())
+	root.AddCommand(newWhoamiCommand(g), newCourseCommand(g), newPronunciationsCommand(g), newVersionCommand())
 	return root
 }
 

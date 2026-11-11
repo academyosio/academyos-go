@@ -21,6 +21,10 @@ type fakeServer struct {
 	puts     []PutPackageRequest
 	// conflict, when set, answers every package PUT with this code.
 	conflict string
+	// pronunciations is the academy's, and pronunciationPuts counts
+	// replacements.
+	pronunciations    Pronunciations
+	pronunciationPuts int
 }
 
 func newFake(t *testing.T) (*fakeServer, *httptest.Server) {
@@ -83,6 +87,16 @@ func (f *fakeServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			Result:  &ApplyResult{Lessons: Counts{Created: 3}},
 			Lessons: map[string]string{"resources": "l-1"}, Quizzes: map[string]string{"designing-endpoints-quiz": "q-1"},
 		})
+	case r.URL.Path == "/api/v1/organizations/acme/pronunciations" && r.Method == http.MethodGet:
+		writeJSONBody(f.t, w, pronunciationsBody{Pronunciations: f.pronunciations})
+	case r.URL.Path == "/api/v1/organizations/acme/pronunciations" && r.Method == http.MethodPut:
+		var body pronunciationsBody
+		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+			f.t.Error(err)
+		}
+		f.pronunciations = body.Pronunciations
+		f.pronunciationPuts++
+		writeJSONBody(f.t, w, body)
 	case strings.HasSuffix(r.URL.Path, "/publish"):
 		w.WriteHeader(http.StatusNoContent)
 	default:
