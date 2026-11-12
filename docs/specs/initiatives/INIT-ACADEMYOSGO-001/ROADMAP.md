@@ -34,6 +34,8 @@ commits implementing one carry the trailer `Refs: RMI-ACADEMYOSGO-<NNN>`.
   - Depends on: `RMI-ACADEMYOSGO-004`
 - [ ] `RMI-ACADEMYOSGO-010` Public repository and v0.1.0 release
   - Depends on: `RMI-ACADEMYOSGO-008`, `RMI-ACADEMYOSGO-009`
+- [x] `RMI-ACADEMYOSGO-015` Documentation site with the SDK and CLI guides, and the public API reference rendered from the server's public OpenAPI document, with a test that the client's requests are in it
+  - Depends on: `RMI-ACADEMYOSGO-009`
 
 ## Phase 3 — More Ways In
 
