@@ -10,3 +10,6 @@ coverage.*
 .idea/
 .vscode/
 .DS_Store
+
+# MkDocs output
+/site/

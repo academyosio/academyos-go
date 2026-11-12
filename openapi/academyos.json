@@ -1,0 +1,5624 @@
+{
+  "components": {
+    "schemas": {
+      "APIKeySummary": {
+        "additionalProperties": false,
+        "properties": {
+          "expires_at": {
+            "description": "When the key expires",
+            "format": "date-time",
+            "type": "string"
+          },
+          "name": {
+            "description": "The key's name",
+            "type": "string"
+          },
+          "organization_slug": {
+            "description": "The organization the key acts in",
+            "type": "string"
+          },
+          "scopes": {
+            "description": "What the key may do",
+            "items": {
+              "type": "string"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "organization_slug",
+          "scopes"
+        ],
+        "type": "object"
+      },
+      "AcademyPronunciationsOutputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/AcademyPronunciationsOutputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "count": {
+            "description": "Pronunciations, one per term and language",
+            "format": "int64",
+            "type": "integer"
+          },
+          "pronunciations": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "description": "Term to language to what is said",
+            "type": "object"
+          }
+        },
+        "required": [
+          "pronunciations",
+          "count"
+        ],
+        "type": "object"
+      },
+      "AddContentUpdateInputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/AddContentUpdateInputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "change_type": {
+            "description": "Type of change",
+            "enum": [
+              "added",
+              "updated",
+              "removed",
+              "reordered"
+            ],
+            "type": "string"
+          },
+          "content_type": {
+            "description": "Type of content affected",
+            "enum": [
+              "section",
+              "lesson"
+            ],
+            "type": "string"
+          },
+          "lesson_id": {
+            "description": "Lesson UUID if applicable",
+            "type": "string"
+          },
+          "section_id": {
+            "description": "Section UUID if applicable",
+            "type": "string"
+          },
+          "summary": {
+            "description": "Description of the change",
+            "type": "string"
+          },
+          "title": {
+            "description": "Title of the changed content",
+            "type": "string"
+          }
+        },
+        "required": [
+          "change_type",
+          "content_type",
+          "title"
+        ],
+        "type": "object"
+      },
+      "Answer": {
+        "additionalProperties": false,
+        "properties": {
+          "accepted_answers": {
+            "items": {
+              "type": "string"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "correct_answer": {
+            "type": "boolean"
+          },
+          "correct_option_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "explanation": {
+            "type": "string"
+          },
+          "question_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "question_id"
+        ],
+        "type": "object"
+      },
+      "ApplyResult": {
+        "additionalProperties": false,
+        "properties": {
+          "course_updated": {
+            "type": "boolean"
+          },
+          "lessons": {
+            "$ref": "#/components/schemas/Counts"
+          },
+          "quizzes": {
+            "$ref": "#/components/schemas/Counts"
+          },
+          "sections": {
+            "$ref": "#/components/schemas/Counts"
+          }
+        },
+        "required": [
+          "course_updated",
+          "sections",
+          "lessons",
+          "quizzes"
+        ],
+        "type": "object"
+      },
+      "ContentUpdateAPI": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/ContentUpdateAPI.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "change_type": {
+            "description": "Type of change",
+            "enum": [
+              "added",
+              "updated",
+              "removed",
+              "reordered"
+            ],
+            "type": "string"
+          },
+          "content_type": {
+            "description": "Type of content affected",
+            "enum": [
+              "section",
+              "lesson"
+            ],
+            "type": "string"
+          },
+          "course_version_id": {
+            "description": "Version UUID",
+            "type": "string"
+          },
+          "created_at": {
+            "description": "Creation timestamp",
+            "format": "date-time",
+            "type": "string"
+          },
+          "id": {
+            "description": "Update UUID",
+            "type": "string"
+          },
+          "lesson_id": {
+            "description": "Lesson UUID if applicable",
+            "type": "string"
+          },
+          "section_id": {
+            "description": "Section UUID if applicable",
+            "type": "string"
+          },
+          "summary": {
+            "description": "Description of the change",
+            "type": "string"
+          },
+          "title": {
+            "description": "Title of the changed content",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "course_version_id",
+          "change_type",
+          "content_type",
+          "title",
+          "created_at"
+        ],
+        "type": "object"
+      },
+      "Counts": {
+        "additionalProperties": false,
+        "properties": {
+          "created": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "kept": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "removed": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "unchanged": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "updated": {
+            "format": "int64",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "created",
+          "updated",
+          "unchanged",
+          "kept",
+          "removed"
+        ],
+        "type": "object"
+      },
+      "Course": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/Course.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "access": {
+            "description": "Course access type",
+            "enum": [
+              "open",
+              "invite",
+              "paid"
+            ],
+            "type": "string"
+          },
+          "created_at": {
+            "description": "Creation timestamp",
+            "format": "date-time",
+            "type": "string"
+          },
+          "currency": {
+            "description": "Currency of price_cents, lowercase ISO 4217",
+            "type": "string"
+          },
+          "current_version": {
+            "description": "Current semantic version",
+            "type": "string"
+          },
+          "description": {
+            "description": "Course description",
+            "type": "string"
+          },
+          "id": {
+            "description": "Course UUID",
+            "type": "string"
+          },
+          "owner_id": {
+            "description": "Owner user UUID",
+            "type": "string"
+          },
+          "owner_name": {
+            "description": "Owner display name",
+            "type": "string"
+          },
+          "price_cents": {
+            "description": "Price of a paid course in the currency's smallest unit",
+            "format": "int64",
+            "type": "integer"
+          },
+          "published_at": {
+            "description": "Publish timestamp",
+            "format": "date-time",
+            "type": "string"
+          },
+          "showcase": {
+            "description": "Whether the course is featured on the platform's home page",
+            "type": "boolean"
+          },
+          "slug": {
+            "description": "URL-safe identifier",
+            "type": "string"
+          },
+          "status": {
+            "description": "Course status",
+            "enum": [
+              "draft",
+              "published",
+              "archived"
+            ],
+            "type": "string"
+          },
+          "thumbnail_url": {
+            "description": "Course thumbnail URL",
+            "type": "string"
+          },
+          "title": {
+            "description": "Course title",
+            "type": "string"
+          },
+          "updated_at": {
+            "description": "Last update timestamp",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "slug",
+          "status",
+          "access",
+          "price_cents",
+          "currency",
+          "owner_id",
+          "owner_name",
+          "current_version",
+          "created_at",
+          "updated_at",
+          "showcase"
+        ],
+        "type": "object"
+      },
+      "CourseVersionAPI": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/CourseVersionAPI.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "course_id": {
+            "description": "Course UUID",
+            "type": "string"
+          },
+          "created_at": {
+            "description": "Creation timestamp",
+            "format": "date-time",
+            "type": "string"
+          },
+          "id": {
+            "description": "Version UUID",
+            "type": "string"
+          },
+          "major": {
+            "description": "Major version number",
+            "format": "int64",
+            "type": "integer"
+          },
+          "minor": {
+            "description": "Minor version number",
+            "format": "int64",
+            "type": "integer"
+          },
+          "patch": {
+            "description": "Patch version number",
+            "format": "int64",
+            "type": "integer"
+          },
+          "published_at": {
+            "description": "Publish timestamp",
+            "format": "date-time",
+            "type": "string"
+          },
+          "published_by_id": {
+            "description": "User who published this version",
+            "type": "string"
+          },
+          "release_notes": {
+            "description": "Markdown release notes",
+            "type": "string"
+          },
+          "requires_revalidation": {
+            "description": "Whether certificates need revalidation",
+            "type": "boolean"
+          },
+          "status": {
+            "description": "Version status",
+            "enum": [
+              "draft",
+              "published",
+              "deprecated"
+            ],
+            "type": "string"
+          },
+          "updated_at": {
+            "description": "Last update timestamp",
+            "format": "date-time",
+            "type": "string"
+          },
+          "version_string": {
+            "description": "Formatted version string (e.g., v1.2.3)",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "course_id",
+          "major",
+          "minor",
+          "patch",
+          "version_string",
+          "status",
+          "requires_revalidation",
+          "created_at",
+          "updated_at"
+        ],
+        "type": "object"
+      },
+      "CourseVersionWithUpdates": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/CourseVersionWithUpdates.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "course_id": {
+            "description": "Course UUID",
+            "type": "string"
+          },
+          "created_at": {
+            "description": "Creation timestamp",
+            "format": "date-time",
+            "type": "string"
+          },
+          "id": {
+            "description": "Version UUID",
+            "type": "string"
+          },
+          "major": {
+            "description": "Major version number",
+            "format": "int64",
+            "type": "integer"
+          },
+          "minor": {
+            "description": "Minor version number",
+            "format": "int64",
+            "type": "integer"
+          },
+          "patch": {
+            "description": "Patch version number",
+            "format": "int64",
+            "type": "integer"
+          },
+          "published_at": {
+            "description": "Publish timestamp",
+            "format": "date-time",
+            "type": "string"
+          },
+          "published_by_id": {
+            "description": "User who published this version",
+            "type": "string"
+          },
+          "release_notes": {
+            "description": "Markdown release notes",
+            "type": "string"
+          },
+          "requires_revalidation": {
+            "description": "Whether certificates need revalidation",
+            "type": "boolean"
+          },
+          "status": {
+            "description": "Version status",
+            "enum": [
+              "draft",
+              "published",
+              "deprecated"
+            ],
+            "type": "string"
+          },
+          "updated_at": {
+            "description": "Last update timestamp",
+            "format": "date-time",
+            "type": "string"
+          },
+          "updates": {
+            "description": "Content updates in this version",
+            "items": {
+              "$ref": "#/components/schemas/ContentUpdateAPI"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "version_string": {
+            "description": "Formatted version string (e.g., v1.2.3)",
+            "type": "string"
+          }
+        },
+        "required": [
+          "updates",
+          "id",
+          "course_id",
+          "major",
+          "minor",
+          "patch",
+          "version_string",
+          "status",
+          "requires_revalidation",
+          "created_at",
+          "updated_at"
+        ],
+        "type": "object"
+      },
+      "CourseWithSections": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/CourseWithSections.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "access": {
+            "description": "Course access type",
+            "enum": [
+              "open",
+              "invite",
+              "paid"
+            ],
+            "type": "string"
+          },
+          "can_edit": {
+            "description": "Whether the caller may edit the course and preview its lessons without enrolling",
+            "type": "boolean"
+          },
+          "created_at": {
+            "description": "Creation timestamp",
+            "format": "date-time",
+            "type": "string"
+          },
+          "currency": {
+            "description": "Currency of price_cents, lowercase ISO 4217",
+            "type": "string"
+          },
+          "current_version": {
+            "description": "Current semantic version",
+            "type": "string"
+          },
+          "description": {
+            "description": "Course description",
+            "type": "string"
+          },
+          "id": {
+            "description": "Course UUID",
+            "type": "string"
+          },
+          "owner_id": {
+            "description": "Owner user UUID",
+            "type": "string"
+          },
+          "owner_name": {
+            "description": "Owner display name",
+            "type": "string"
+          },
+          "price_cents": {
+            "description": "Price of a paid course in the currency's smallest unit",
+            "format": "int64",
+            "type": "integer"
+          },
+          "published_at": {
+            "description": "Publish timestamp",
+            "format": "date-time",
+            "type": "string"
+          },
+          "sections": {
+            "description": "Course sections",
+            "items": {
+              "$ref": "#/components/schemas/SectionWithLessons"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "showcase": {
+            "description": "Whether the course is featured on the platform's home page",
+            "type": "boolean"
+          },
+          "slug": {
+            "description": "URL-safe identifier",
+            "type": "string"
+          },
+          "status": {
+            "description": "Course status",
+            "enum": [
+              "draft",
+              "published",
+              "archived"
+            ],
+            "type": "string"
+          },
+          "thumbnail_url": {
+            "description": "Course thumbnail URL",
+            "type": "string"
+          },
+          "title": {
+            "description": "Course title",
+            "type": "string"
+          },
+          "updated_at": {
+            "description": "Last update timestamp",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "sections",
+          "can_edit",
+          "id",
+          "title",
+          "slug",
+          "status",
+          "access",
+          "price_cents",
+          "currency",
+          "owner_id",
+          "owner_name",
+          "current_version",
+          "created_at",
+          "updated_at",
+          "showcase"
+        ],
+        "type": "object"
+      },
+      "CreateCourseInputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/CreateCourseInputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "access": {
+            "default": "open",
+            "description": "Course access type",
+            "enum": [
+              "open",
+              "invite",
+              "paid"
+            ],
+            "type": "string"
+          },
+          "currency": {
+            "description": "Currency of price_cents, lowercase ISO 4217 (default usd)",
+            "type": "string"
+          },
+          "description": {
+            "description": "Course description",
+            "type": "string"
+          },
+          "price_cents": {
+            "description": "Price of a paid course in the currency's smallest unit",
+            "format": "int64",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "slug": {
+            "description": "URL-safe identifier",
+            "maxLength": 100,
+            "minLength": 1,
+            "pattern": "^[a-z0-9-]+$",
+            "type": "string"
+          },
+          "thumbnail_url": {
+            "description": "Course thumbnail URL",
+            "type": "string"
+          },
+          "title": {
+            "description": "Course title",
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "slug"
+        ],
+        "type": "object"
+      },
+      "CreateCourseVersionInputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/CreateCourseVersionInputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "bump_type": {
+            "description": "Type of version bump",
+            "enum": [
+              "major",
+              "minor",
+              "patch"
+            ],
+            "type": "string"
+          },
+          "release_notes": {
+            "description": "Markdown release notes",
+            "type": "string"
+          },
+          "requires_revalidation": {
+            "description": "Whether certificates need revalidation",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "bump_type"
+        ],
+        "type": "object"
+      },
+      "CreateLessonInputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/CreateLessonInputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "content": {
+            "description": "Text content (for text lessons)",
+            "type": "string"
+          },
+          "duration_seconds": {
+            "description": "Video duration in seconds",
+            "format": "int64",
+            "type": "integer"
+          },
+          "position": {
+            "description": "Lesson position (defaults to end)",
+            "format": "int64",
+            "type": "integer"
+          },
+          "title": {
+            "description": "Lesson title",
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": {
+            "description": "Lesson type",
+            "enum": [
+              "video",
+              "text",
+              "quiz"
+            ],
+            "type": "string"
+          },
+          "video_provider": {
+            "description": "Video provider",
+            "enum": [
+              "youtube",
+              "vimeo"
+            ],
+            "type": "string"
+          },
+          "video_url": {
+            "description": "Video URL (for video lessons)",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "type"
+        ],
+        "type": "object"
+      },
+      "CreateQuizInputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/CreateQuizInputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "allow_retry": {
+            "description": "Allow retries (default: true)",
+            "type": "boolean"
+          },
+          "external_url": {
+            "description": "External quiz URL",
+            "type": "string"
+          },
+          "h5p_content": {
+            "description": "H5P JSON content",
+            "type": "string"
+          },
+          "h5p_file_path": {
+            "description": "Path to H5P file",
+            "type": "string"
+          },
+          "max_attempts": {
+            "description": "Max attempts, 0 = unlimited (default: 0)",
+            "format": "int64",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "pass_percentage": {
+            "description": "Pass percentage (default: 70)",
+            "format": "int64",
+            "maximum": 100,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "questions": {
+            "description": "Questions with their answer key, for a questions quiz",
+            "items": {
+              "$ref": "#/components/schemas/Question"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "quiz_type": {
+            "default": "questions",
+            "description": "Quiz type",
+            "enum": [
+              "questions",
+              "h5p",
+              "external"
+            ],
+            "type": "string"
+          },
+          "show_feedback": {
+            "description": "Show feedback (default: true)",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "quiz_type"
+        ],
+        "type": "object"
+      },
+      "CreateSectionInputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/CreateSectionInputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "position": {
+            "description": "Section position (defaults to end)",
+            "format": "int64",
+            "type": "integer"
+          },
+          "title": {
+            "description": "Section title",
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "title"
+        ],
+        "type": "object"
+      },
+      "DeleteCourseOutputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/DeleteCourseOutputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ],
+        "type": "object"
+      },
+      "DeleteLessonOutputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/DeleteLessonOutputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ],
+        "type": "object"
+      },
+      "DeleteQuizOutputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/DeleteQuizOutputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "message": {
+            "description": "Success message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ],
+        "type": "object"
+      },
+      "DeleteSectionOutputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/DeleteSectionOutputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ],
+        "type": "object"
+      },
+      "ErrorDetail": {
+        "additionalProperties": false,
+        "properties": {
+          "location": {
+            "description": "Where the error occurred, e.g. 'body.items[3].tags' or 'path.thing-id'",
+            "type": "string"
+          },
+          "message": {
+            "description": "Error message text",
+            "type": "string"
+          },
+          "value": {
+            "description": "The value at the given location"
+          }
+        },
+        "type": "object"
+      },
+      "ErrorModel": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/ErrorModel.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "detail": {
+            "description": "A human-readable explanation specific to this occurrence of the problem.",
+            "examples": [
+              "Property foo is required but is missing."
+            ],
+            "type": "string"
+          },
+          "errors": {
+            "description": "Optional list of individual error details",
+            "items": {
+              "$ref": "#/components/schemas/ErrorDetail"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "instance": {
+            "description": "A URI reference that identifies the specific occurrence of the problem.",
+            "examples": [
+              "https://example.com/error-log/abc123"
+            ],
+            "format": "uri",
+            "type": "string"
+          },
+          "status": {
+            "description": "HTTP status code",
+            "examples": [
+              400
+            ],
+            "format": "int64",
+            "type": "integer"
+          },
+          "title": {
+            "description": "A short, human-readable summary of the problem type. This value should not change between occurrences of the error.",
+            "examples": [
+              "Bad Request"
+            ],
+            "type": "string"
+          },
+          "type": {
+            "default": "about:blank",
+            "description": "A URI reference to human-readable documentation for the error.",
+            "examples": [
+              "https://example.com/errors/example"
+            ],
+            "format": "uri",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "File": {
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "description": "Path relative to the package root, with forward slashes",
+            "type": "string"
+          },
+          "sha256": {
+            "description": "Lowercase hex SHA-256 of the file",
+            "type": "string"
+          },
+          "size": {
+            "description": "Size in bytes",
+            "format": "int64",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "path",
+          "sha256",
+          "size"
+        ],
+        "type": "object"
+      },
+      "Finding": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string"
+          },
+          "fix": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "pointer": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "severity",
+          "code",
+          "file",
+          "message"
+        ],
+        "type": "object"
+      },
+      "LearnerOption": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "text"
+        ],
+        "type": "object"
+      },
+      "LearnerQuestion": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "multiple_answers": {
+            "type": "boolean"
+          },
+          "options": {
+            "items": {
+              "$ref": "#/components/schemas/LearnerOption"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "points": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "prompt": {
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "multiple_choice",
+              "true_false",
+              "short_answer"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "type",
+          "prompt",
+          "points"
+        ],
+        "type": "object"
+      },
+      "Lesson": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/Lesson.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "duration_seconds": {
+            "description": "Video duration in seconds",
+            "format": "int64",
+            "type": "integer"
+          },
+          "id": {
+            "description": "Lesson UUID",
+            "type": "string"
+          },
+          "position": {
+            "description": "Lesson order",
+            "format": "int64",
+            "type": "integer"
+          },
+          "title": {
+            "description": "Lesson title",
+            "type": "string"
+          },
+          "type": {
+            "description": "Lesson type",
+            "enum": [
+              "video",
+              "text",
+              "quiz"
+            ],
+            "type": "string"
+          },
+          "video_provider": {
+            "description": "Video provider",
+            "enum": [
+              "youtube",
+              "vimeo"
+            ],
+            "type": "string"
+          },
+          "video_url": {
+            "description": "Video URL (for video lessons)",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "type",
+          "position"
+        ],
+        "type": "object"
+      },
+      "LessonDetail": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/LessonDetail.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "content": {
+            "description": "Text content (for text lessons)",
+            "type": "string"
+          },
+          "duration_seconds": {
+            "description": "Video duration in seconds",
+            "format": "int64",
+            "type": "integer"
+          },
+          "has_deck": {
+            "description": "Whether the lesson plays from slides; get its deck URL and narration from the play and narration routes",
+            "type": "boolean"
+          },
+          "id": {
+            "description": "Lesson UUID",
+            "type": "string"
+          },
+          "next_lesson_id": {
+            "description": "Next lesson UUID",
+            "type": "string"
+          },
+          "position": {
+            "description": "Lesson order",
+            "format": "int64",
+            "type": "integer"
+          },
+          "prev_lesson_id": {
+            "description": "Previous lesson UUID",
+            "type": "string"
+          },
+          "preview": {
+            "description": "Whether the caller is an author previewing the lesson, so nothing is recorded",
+            "type": "boolean"
+          },
+          "progress": {
+            "$ref": "#/components/schemas/LessonProgress",
+            "description": "User's progress on this lesson"
+          },
+          "section_id": {
+            "description": "Section UUID",
+            "type": "string"
+          },
+          "section_title": {
+            "description": "Section title",
+            "type": "string"
+          },
+          "title": {
+            "description": "Lesson title",
+            "type": "string"
+          },
+          "type": {
+            "description": "Lesson type",
+            "enum": [
+              "video",
+              "text",
+              "quiz"
+            ],
+            "type": "string"
+          },
+          "video_provider": {
+            "description": "Video provider",
+            "enum": [
+              "youtube",
+              "vimeo"
+            ],
+            "type": "string"
+          },
+          "video_url": {
+            "description": "Video URL (for video lessons)",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "type",
+          "position",
+          "section_id",
+          "section_title",
+          "has_deck",
+          "preview"
+        ],
+        "type": "object"
+      },
+      "LessonProgress": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/LessonProgress.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "completed": {
+            "description": "Whether lesson is completed",
+            "type": "boolean"
+          },
+          "completed_at": {
+            "description": "When lesson was completed",
+            "format": "date-time",
+            "type": "string"
+          },
+          "last_slide": {
+            "description": "data-id of the last slide reached in a deck lesson",
+            "type": "string"
+          },
+          "lesson_id": {
+            "description": "Lesson UUID",
+            "type": "string"
+          },
+          "started_at": {
+            "description": "When lesson was started",
+            "format": "date-time",
+            "type": "string"
+          },
+          "video_position_seconds": {
+            "description": "Video playback position",
+            "format": "int64",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "lesson_id",
+          "completed"
+        ],
+        "type": "object"
+      },
+      "ListCourseVersionsOutputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/ListCourseVersionsOutputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "total": {
+            "description": "Total number of versions",
+            "format": "int64",
+            "type": "integer"
+          },
+          "versions": {
+            "items": {
+              "$ref": "#/components/schemas/CourseVersionAPI"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "versions",
+          "total"
+        ],
+        "type": "object"
+      },
+      "ListCoursesOutputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/ListCoursesOutputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "courses": {
+            "items": {
+              "$ref": "#/components/schemas/Course"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "total": {
+            "description": "Total number of courses",
+            "format": "int64",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "courses",
+          "total"
+        ],
+        "type": "object"
+      },
+      "Manifest": {
+        "additionalProperties": false,
+        "properties": {
+          "coursePath": {
+            "description": "The course directory within the package root, \".\" when they are the same",
+            "type": "string"
+          },
+          "files": {
+            "description": "The package's files, sorted by path",
+            "items": {
+              "$ref": "#/components/schemas/File"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "coursePath",
+          "files"
+        ],
+        "type": "object"
+      },
+      "MembershipSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "organization_id": {
+            "type": "string"
+          },
+          "organization_name": {
+            "type": "string"
+          },
+          "organization_slug": {
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "student",
+              "instructor",
+              "org_admin",
+              "owner"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "organization_id",
+          "organization_name",
+          "organization_slug",
+          "role"
+        ],
+        "type": "object"
+      },
+      "NarrationOutputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/NarrationOutputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "lang": {
+            "description": "The narration's language",
+            "type": "string"
+          },
+          "languages": {
+            "description": "Languages the course is narrated in; the first is the default",
+            "items": {
+              "type": "string"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "mode": {
+            "description": "learn records progress; preview, for authors, records nothing",
+            "enum": [
+              "learn",
+              "preview"
+            ],
+            "type": "string"
+          },
+          "slides": {
+            "description": "The lesson's slides in order",
+            "items": {
+              "$ref": "#/components/schemas/NarrationSlide"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "lang",
+          "languages",
+          "mode",
+          "slides"
+        ],
+        "type": "object"
+      },
+      "NarrationSlide": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "description": "The slide's data-id",
+            "type": "string"
+          },
+          "segments": {
+            "description": "The slide's sentences, as displayed and as spoken",
+            "items": {
+              "$ref": "#/components/schemas/Segment"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "title": {
+            "description": "The slide's data-title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "segments"
+        ],
+        "type": "object"
+      },
+      "Option": {
+        "additionalProperties": false,
+        "properties": {
+          "correct": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "text",
+          "correct"
+        ],
+        "type": "object"
+      },
+      "PackageOutputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/PackageOutputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "course_id": {
+            "description": "Course UUID",
+            "type": "string"
+          },
+          "manifest": {
+            "$ref": "#/components/schemas/Manifest",
+            "description": "The package's files"
+          },
+          "revision": {
+            "description": "Raised by every applied package and every edit made in the app",
+            "format": "int64",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "course_id",
+          "revision",
+          "manifest"
+        ],
+        "type": "object"
+      },
+      "PlayOutputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/PlayOutputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "end_slide": {
+            "description": "data-id of the lesson's last slide",
+            "type": "string"
+          },
+          "expires_at": {
+            "description": "When the URL stops working; ask again for a new one",
+            "format": "date-time",
+            "type": "string"
+          },
+          "mode": {
+            "description": "learn records progress; preview, for authors, records nothing",
+            "enum": [
+              "learn",
+              "preview"
+            ],
+            "type": "string"
+          },
+          "start_slide": {
+            "description": "data-id of the lesson's first slide",
+            "type": "string"
+          },
+          "url": {
+            "description": "The deck URL for the player's frame, opening at the lesson's first slide",
+            "type": "string"
+          }
+        },
+        "required": [
+          "url",
+          "start_slide",
+          "end_slide",
+          "expires_at",
+          "mode"
+        ],
+        "type": "object"
+      },
+      "PronunciationReviewOutputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/PronunciationReviewOutputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "courses": {
+            "description": "Courses with an uploaded package",
+            "items": {
+              "$ref": "#/components/schemas/ReviewCourse"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "entries": {
+            "description": "Pronunciations, by term",
+            "items": {
+              "$ref": "#/components/schemas/ReviewEntry"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "courses",
+          "entries"
+        ],
+        "type": "object"
+      },
+      "PutAcademyPronunciationsInputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/PutAcademyPronunciationsInputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "pronunciations": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "description": "Term to language to what is said",
+            "type": "object"
+          }
+        },
+        "required": [
+          "pronunciations"
+        ],
+        "type": "object"
+      },
+      "PutPackageInputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/PutPackageInputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "base_revision": {
+            "description": "The revision the package was last synced at; absent for a first push",
+            "format": "int64",
+            "type": "integer"
+          },
+          "dry_run": {
+            "description": "Report what would change without changing anything",
+            "type": "boolean"
+          },
+          "force": {
+            "description": "Apply even if the academy's copy is newer, or the course exists without a package",
+            "type": "boolean"
+          },
+          "manifest": {
+            "$ref": "#/components/schemas/Manifest",
+            "description": "The package's files"
+          },
+          "prune": {
+            "description": "Remove sections and lessons the package no longer lists, except lessons learners have used",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "manifest"
+        ],
+        "type": "object"
+      },
+      "PutPackageOutputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/PutPackageOutputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "applied": {
+            "description": "Whether the package was applied; false while files are missing or for a dry run",
+            "type": "boolean"
+          },
+          "course_id": {
+            "description": "Course UUID",
+            "type": "string"
+          },
+          "created": {
+            "description": "Whether the package created the course",
+            "type": "boolean"
+          },
+          "dry_run": {
+            "description": "Whether this was a dry run",
+            "type": "boolean"
+          },
+          "lessons": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Lesson UUIDs by course-spec lesson ID",
+            "type": "object"
+          },
+          "missing": {
+            "description": "Checksums to upload before the package can be applied",
+            "items": {
+              "type": "string"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "quizzes": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Quiz UUIDs by course-spec quiz ID",
+            "type": "object"
+          },
+          "result": {
+            "$ref": "#/components/schemas/ApplyResult",
+            "description": "What was created, updated, left unchanged, kept or removed"
+          },
+          "revision": {
+            "description": "The course's revision after applying",
+            "format": "int64",
+            "type": "integer"
+          },
+          "status": {
+            "description": "Course status: draft, published or archived",
+            "type": "string"
+          },
+          "warnings": {
+            "description": "Validation warnings",
+            "items": {
+              "$ref": "#/components/schemas/Finding"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "applied"
+        ],
+        "type": "object"
+      },
+      "Question": {
+        "additionalProperties": false,
+        "properties": {
+          "accepted_answers": {
+            "items": {
+              "type": "string"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "correct_answer": {
+            "type": "boolean"
+          },
+          "explanation": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "options": {
+            "items": {
+              "$ref": "#/components/schemas/Option"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "points": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "prompt": {
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "multiple_choice",
+              "true_false",
+              "short_answer"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "type",
+          "prompt"
+        ],
+        "type": "object"
+      },
+      "QuestionResult": {
+        "additionalProperties": false,
+        "properties": {
+          "correct": {
+            "type": "boolean"
+          },
+          "earned_points": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "points": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "question_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "question_id",
+          "correct",
+          "earned_points",
+          "points"
+        ],
+        "type": "object"
+      },
+      "Quiz": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/Quiz.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "allow_retry": {
+            "description": "Allow users to retry the quiz",
+            "type": "boolean"
+          },
+          "created_at": {
+            "description": "Creation timestamp",
+            "format": "date-time",
+            "type": "string"
+          },
+          "external_url": {
+            "description": "URL for external quizzes",
+            "type": "string"
+          },
+          "graded": {
+            "description": "True when the server grades answers. Scores from h5p and external quizzes are reported by the learner's browser and cannot be verified.",
+            "type": "boolean"
+          },
+          "h5p_content": {
+            "description": "H5P JSON content for embedded quizzes",
+            "type": "string"
+          },
+          "h5p_file_path": {
+            "description": "Path to H5P file in repo",
+            "type": "string"
+          },
+          "id": {
+            "description": "Quiz UUID",
+            "type": "string"
+          },
+          "learner_questions": {
+            "description": "Questions without answers, for taking the quiz",
+            "items": {
+              "$ref": "#/components/schemas/LearnerQuestion"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "lesson_id": {
+            "description": "Lesson UUID",
+            "type": "string"
+          },
+          "max_attempts": {
+            "description": "Maximum attempts allowed (0 = unlimited)",
+            "format": "int64",
+            "type": "integer"
+          },
+          "pass_percentage": {
+            "description": "Percentage required to pass (0-100)",
+            "format": "int64",
+            "type": "integer"
+          },
+          "questions": {
+            "description": "Questions with their answer key (course editors only)",
+            "items": {
+              "$ref": "#/components/schemas/Question"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "quiz_type": {
+            "description": "Quiz type: questions (graded by the server), h5p or external",
+            "enum": [
+              "questions",
+              "h5p",
+              "external"
+            ],
+            "type": "string"
+          },
+          "show_feedback": {
+            "description": "Show which answers were right, and the correct answers once the learner passes or runs out of attempts",
+            "type": "boolean"
+          },
+          "updated_at": {
+            "description": "Last update timestamp",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "lesson_id",
+          "quiz_type",
+          "graded",
+          "pass_percentage",
+          "allow_retry",
+          "show_feedback",
+          "max_attempts",
+          "created_at",
+          "updated_at"
+        ],
+        "type": "object"
+      },
+      "QuizResult": {
+        "additionalProperties": false,
+        "properties": {
+          "answers": {
+            "additionalProperties": {},
+            "description": "Raw answers from an h5p or external quiz",
+            "type": "object"
+          },
+          "attempt_number": {
+            "description": "Attempt number",
+            "format": "int64",
+            "type": "integer"
+          },
+          "completed_at": {
+            "description": "Completion timestamp",
+            "format": "date-time",
+            "type": "string"
+          },
+          "grade": {
+            "$ref": "#/components/schemas/Result",
+            "description": "Per-question grade, when the quiz shows feedback"
+          },
+          "id": {
+            "description": "Result UUID",
+            "type": "string"
+          },
+          "passed": {
+            "description": "Whether the user passed",
+            "type": "boolean"
+          },
+          "principal_id": {
+            "description": "User principal UUID",
+            "type": "string"
+          },
+          "quiz_id": {
+            "description": "Quiz UUID",
+            "type": "string"
+          },
+          "responses": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Response"
+            },
+            "description": "Answers to a questions quiz",
+            "type": "object"
+          },
+          "score": {
+            "description": "Score achieved (0-100)",
+            "format": "double",
+            "type": "number"
+          },
+          "verified": {
+            "description": "True when the server graded the answers",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "quiz_id",
+          "principal_id",
+          "score",
+          "passed",
+          "verified",
+          "attempt_number",
+          "completed_at"
+        ],
+        "type": "object"
+      },
+      "QuizWithResults": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/QuizWithResults.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "allow_retry": {
+            "description": "Allow users to retry the quiz",
+            "type": "boolean"
+          },
+          "attempts": {
+            "description": "Number of attempts made",
+            "format": "int64",
+            "type": "integer"
+          },
+          "best_score": {
+            "description": "User's best score",
+            "format": "double",
+            "type": "number"
+          },
+          "can_retry": {
+            "description": "Whether user can retry",
+            "type": "boolean"
+          },
+          "created_at": {
+            "description": "Creation timestamp",
+            "format": "date-time",
+            "type": "string"
+          },
+          "external_url": {
+            "description": "URL for external quizzes",
+            "type": "string"
+          },
+          "feedback": {
+            "description": "Correct answers and explanations, once the learner has passed or has no attempts left",
+            "items": {
+              "$ref": "#/components/schemas/Answer"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "graded": {
+            "description": "True when the server grades answers. Scores from h5p and external quizzes are reported by the learner's browser and cannot be verified.",
+            "type": "boolean"
+          },
+          "h5p_content": {
+            "description": "H5P JSON content for embedded quizzes",
+            "type": "string"
+          },
+          "h5p_file_path": {
+            "description": "Path to H5P file in repo",
+            "type": "string"
+          },
+          "id": {
+            "description": "Quiz UUID",
+            "type": "string"
+          },
+          "learner_questions": {
+            "description": "Questions without answers, for taking the quiz",
+            "items": {
+              "$ref": "#/components/schemas/LearnerQuestion"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "lesson_id": {
+            "description": "Lesson UUID",
+            "type": "string"
+          },
+          "max_attempts": {
+            "description": "Maximum attempts allowed (0 = unlimited)",
+            "format": "int64",
+            "type": "integer"
+          },
+          "pass_percentage": {
+            "description": "Percentage required to pass (0-100)",
+            "format": "int64",
+            "type": "integer"
+          },
+          "questions": {
+            "description": "Questions with their answer key (course editors only)",
+            "items": {
+              "$ref": "#/components/schemas/Question"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "quiz_type": {
+            "description": "Quiz type: questions (graded by the server), h5p or external",
+            "enum": [
+              "questions",
+              "h5p",
+              "external"
+            ],
+            "type": "string"
+          },
+          "show_feedback": {
+            "description": "Show which answers were right, and the correct answers once the learner passes or runs out of attempts",
+            "type": "boolean"
+          },
+          "updated_at": {
+            "description": "Last update timestamp",
+            "format": "date-time",
+            "type": "string"
+          },
+          "user_results": {
+            "description": "User's quiz results",
+            "items": {
+              "$ref": "#/components/schemas/QuizResult"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "attempts",
+          "can_retry",
+          "id",
+          "lesson_id",
+          "quiz_type",
+          "graded",
+          "pass_percentage",
+          "allow_retry",
+          "show_feedback",
+          "max_attempts",
+          "created_at",
+          "updated_at"
+        ],
+        "type": "object"
+      },
+      "ReorderLessonsInputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/ReorderLessonsInputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "lesson_ids": {
+            "description": "Ordered list of lesson UUIDs",
+            "items": {
+              "type": "string"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "lesson_ids"
+        ],
+        "type": "object"
+      },
+      "ReorderLessonsOutputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/ReorderLessonsOutputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ],
+        "type": "object"
+      },
+      "ReorderSectionsInputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/ReorderSectionsInputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "section_ids": {
+            "description": "Ordered list of section UUIDs",
+            "items": {
+              "type": "string"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "section_ids"
+        ],
+        "type": "object"
+      },
+      "ReorderSectionsOutputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/ReorderSectionsOutputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ],
+        "type": "object"
+      },
+      "Response": {
+        "additionalProperties": false,
+        "properties": {
+          "option_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "Result": {
+        "additionalProperties": false,
+        "properties": {
+          "earned_points": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "questions": {
+            "items": {
+              "$ref": "#/components/schemas/QuestionResult"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "score": {
+            "format": "double",
+            "type": "number"
+          },
+          "total_points": {
+            "format": "int64",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "score",
+          "earned_points",
+          "total_points",
+          "questions"
+        ],
+        "type": "object"
+      },
+      "ReviewCourse": {
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "description": "Why the course's narration couldn't be read, when it couldn't",
+            "type": "string"
+          },
+          "lang": {
+            "description": "The language the course is written in, the first it is narrated in",
+            "type": "string"
+          },
+          "slug": {
+            "description": "Course slug",
+            "type": "string"
+          },
+          "title": {
+            "description": "Course title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "slug",
+          "title"
+        ],
+        "type": "object"
+      },
+      "ReviewEntry": {
+        "additionalProperties": false,
+        "properties": {
+          "course": {
+            "description": "The course slug, for a course's own pronunciation",
+            "type": "string"
+          },
+          "lang": {
+            "description": "Language tag",
+            "type": "string"
+          },
+          "layer": {
+            "description": "Where the pronunciation is set",
+            "enum": [
+              "platform",
+              "academy",
+              "course"
+            ],
+            "type": "string"
+          },
+          "replaced_by": {
+            "description": "Where a higher layer sets the same term: academy, or course slugs",
+            "items": {
+              "type": "string"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "say": {
+            "description": "What is said; empty says the term as written",
+            "type": "string"
+          },
+          "term": {
+            "description": "The term as written",
+            "type": "string"
+          },
+          "use_count": {
+            "description": "Times the term is said where this pronunciation applies",
+            "format": "int64",
+            "type": "integer"
+          },
+          "uses": {
+            "description": "Lessons whose narration says the term where this pronunciation applies",
+            "items": {
+              "$ref": "#/components/schemas/ReviewUse"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "verified": {
+            "$ref": "#/components/schemas/ReviewVerification",
+            "description": "Who verified this respelling by ear and when; null when no one has"
+          }
+        },
+        "required": [
+          "term",
+          "lang",
+          "say",
+          "layer",
+          "replaced_by",
+          "uses",
+          "use_count",
+          "verified"
+        ],
+        "type": "object"
+      },
+      "ReviewUse": {
+        "additionalProperties": false,
+        "properties": {
+          "count": {
+            "description": "Times the lesson's narration says the term",
+            "format": "int64",
+            "type": "integer"
+          },
+          "course": {
+            "description": "Course slug",
+            "type": "string"
+          },
+          "examples": {
+            "description": "Sentences that say it, as written, at most three",
+            "items": {
+              "type": "string"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "lesson_id": {
+            "description": "Lesson ID",
+            "type": "string"
+          },
+          "lesson_title": {
+            "description": "Lesson title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "course",
+          "lesson_id",
+          "lesson_title",
+          "count",
+          "examples"
+        ],
+        "type": "object"
+      },
+      "ReviewVerification": {
+        "additionalProperties": false,
+        "properties": {
+          "at": {
+            "description": "When it was verified",
+            "format": "date-time",
+            "type": "string"
+          },
+          "by": {
+            "description": "Who verified it",
+            "type": "string"
+          },
+          "voice": {
+            "description": "The browser voice it was heard with",
+            "type": "string"
+          }
+        },
+        "required": [
+          "by",
+          "at"
+        ],
+        "type": "object"
+      },
+      "Say": {
+        "additionalProperties": false,
+        "properties": {
+          "as": {
+            "description": "What is said",
+            "type": "string"
+          },
+          "end": {
+            "description": "End of the written term in the displayed text",
+            "format": "int64",
+            "type": "integer"
+          },
+          "spoken_end": {
+            "description": "End of the spoken form in the spoken text",
+            "format": "int64",
+            "type": "integer"
+          },
+          "spoken_start": {
+            "description": "Start of the spoken form in the spoken text",
+            "format": "int64",
+            "type": "integer"
+          },
+          "start": {
+            "description": "Start of the written term in the displayed text, in UTF-16 code units",
+            "format": "int64",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "start",
+          "end",
+          "spoken_start",
+          "spoken_end",
+          "as"
+        ],
+        "type": "object"
+      },
+      "Section": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/Section.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "created_at": {
+            "description": "Creation timestamp",
+            "format": "date-time",
+            "type": "string"
+          },
+          "id": {
+            "description": "Section UUID",
+            "type": "string"
+          },
+          "position": {
+            "description": "Section order",
+            "format": "int64",
+            "type": "integer"
+          },
+          "title": {
+            "description": "Section title",
+            "type": "string"
+          },
+          "updated_at": {
+            "description": "Last update timestamp",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "position",
+          "created_at",
+          "updated_at"
+        ],
+        "type": "object"
+      },
+      "SectionWithLessons": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "description": "Section UUID",
+            "type": "string"
+          },
+          "lessons": {
+            "description": "Section lessons",
+            "items": {
+              "$ref": "#/components/schemas/Lesson"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "position": {
+            "description": "Section order",
+            "format": "int64",
+            "type": "integer"
+          },
+          "title": {
+            "description": "Section title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "position",
+          "lessons"
+        ],
+        "type": "object"
+      },
+      "Segment": {
+        "additionalProperties": false,
+        "properties": {
+          "pause_ms": {
+            "description": "Silence after the sentence, in milliseconds",
+            "format": "int64",
+            "type": "integer"
+          },
+          "say": {
+            "description": "Substitutions that map the spoken text back to the displayed text",
+            "items": {
+              "$ref": "#/components/schemas/Say"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "spoken": {
+            "description": "The sentence as the voice says it",
+            "type": "string"
+          },
+          "text": {
+            "description": "The sentence as displayed",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text",
+          "spoken"
+        ],
+        "type": "object"
+      },
+      "SuggestPronunciationsInputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/SuggestPronunciationsInputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "lang": {
+            "description": "The language of bracketed IPA with no language named before it, such as it; English when empty",
+            "maxLength": 35,
+            "type": "string"
+          },
+          "text": {
+            "description": "IPA between slashes or brackets, a respelling such as LAM-bər-GHEE-nee, or both, as Wikipedia writes them",
+            "maxLength": 1000,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "type": "object"
+      },
+      "SuggestPronunciationsOutputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/SuggestPronunciationsOutputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "suggestions": {
+            "description": "Respellings for each word, most likely first",
+            "items": {
+              "$ref": "#/components/schemas/Suggestion"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "suggestions"
+        ],
+        "type": "object"
+      },
+      "Suggestion": {
+        "additionalProperties": false,
+        "properties": {
+          "candidates": {
+            "items": {
+              "type": "string"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "kind": {
+            "type": "string"
+          },
+          "lang": {
+            "type": "string"
+          },
+          "respelling": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "source",
+          "respelling",
+          "candidates"
+        ],
+        "type": "object"
+      },
+      "UpdateCourseInputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/UpdateCourseInputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "access": {
+            "description": "Course access type",
+            "enum": [
+              "open",
+              "invite",
+              "paid"
+            ],
+            "type": "string"
+          },
+          "currency": {
+            "description": "Currency of price_cents, lowercase ISO 4217",
+            "type": "string"
+          },
+          "description": {
+            "description": "Course description",
+            "type": "string"
+          },
+          "price_cents": {
+            "description": "Price of a paid course in the currency's smallest unit",
+            "format": "int64",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "showcase": {
+            "description": "Feature the course on the home page; platform administrators only, for a published course of a public academy that allows featuring",
+            "type": "boolean"
+          },
+          "thumbnail_url": {
+            "description": "Course thumbnail URL",
+            "type": "string"
+          },
+          "title": {
+            "description": "Course title",
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "UpdateCourseVersionInputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/UpdateCourseVersionInputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "release_notes": {
+            "description": "Markdown release notes",
+            "type": "string"
+          },
+          "requires_revalidation": {
+            "description": "Whether certificates need revalidation",
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "UpdateLessonInputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/UpdateLessonInputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "content": {
+            "description": "Text content (for text lessons)",
+            "type": "string"
+          },
+          "duration_seconds": {
+            "description": "Video duration in seconds",
+            "format": "int64",
+            "type": "integer"
+          },
+          "title": {
+            "description": "Lesson title",
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "video_provider": {
+            "description": "Video provider",
+            "enum": [
+              "youtube",
+              "vimeo"
+            ],
+            "type": "string"
+          },
+          "video_url": {
+            "description": "Video URL (for video lessons)",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "UpdateQuizInputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/UpdateQuizInputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "allow_retry": {
+            "description": "Allow retries",
+            "type": "boolean"
+          },
+          "external_url": {
+            "description": "External quiz URL",
+            "type": "string"
+          },
+          "h5p_content": {
+            "description": "H5P JSON content",
+            "type": "string"
+          },
+          "h5p_file_path": {
+            "description": "Path to H5P file",
+            "type": "string"
+          },
+          "max_attempts": {
+            "description": "Max attempts, 0 = unlimited",
+            "format": "int64",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "pass_percentage": {
+            "description": "Pass percentage",
+            "format": "int64",
+            "maximum": 100,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "questions": {
+            "description": "Questions with their answer key; replaces all questions when present",
+            "items": {
+              "$ref": "#/components/schemas/Question"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "quiz_type": {
+            "description": "Quiz type",
+            "enum": [
+              "questions",
+              "h5p",
+              "external"
+            ],
+            "type": "string"
+          },
+          "show_feedback": {
+            "description": "Show feedback",
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "UpdateSectionInputBody": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/UpdateSectionInputBody.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "title": {
+            "description": "Section title",
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "UserWithMemberships": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "http://localhost:8080/schemas/UserWithMemberships.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "api_key": {
+            "$ref": "#/components/schemas/APIKeySummary",
+            "description": "The API key this request used, if any"
+          },
+          "avatar_url": {
+            "description": "User avatar URL",
+            "type": "string"
+          },
+          "created_at": {
+            "description": "Creation timestamp",
+            "format": "date-time",
+            "type": "string"
+          },
+          "email": {
+            "description": "User email address",
+            "type": "string"
+          },
+          "id": {
+            "description": "User UUID",
+            "type": "string"
+          },
+          "is_platform_admin": {
+            "description": "Whether user is a platform admin",
+            "type": "boolean"
+          },
+          "memberships": {
+            "description": "Organization memberships",
+            "items": {
+              "$ref": "#/components/schemas/MembershipSummary"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "name": {
+            "description": "User display name",
+            "type": "string"
+          },
+          "updated_at": {
+            "description": "Last update timestamp",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "memberships",
+          "id",
+          "email",
+          "name",
+          "is_platform_admin",
+          "created_at",
+          "updated_at"
+        ],
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "bearer": {
+        "description": "An AcademyOS API key for the academy, sent as a bearer token.",
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "description": "Create, update and publish the courses of an AcademyOS academy, upload course packages and manage the academy's pronunciations, with an API key.",
+    "title": "AcademyOS API",
+    "version": "1.0.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/v1/organizations/{orgSlug}/courses": {
+      "get": {
+        "operationId": "list-courses",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by status (empty for all)",
+            "explode": false,
+            "in": "query",
+            "name": "status",
+            "schema": {
+              "description": "Filter by status (empty for all)",
+              "enum": [
+                "",
+                "draft",
+                "published",
+                "archived"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Page size",
+            "explode": false,
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "default": 20,
+              "description": "Page size",
+              "format": "int64",
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Page offset",
+            "explode": false,
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "default": 0,
+              "description": "Page offset",
+              "format": "int64",
+              "minimum": 0,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListCoursesOutputBody"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "List courses in an organization",
+        "tags": [
+          "Courses"
+        ]
+      },
+      "post": {
+        "operationId": "create-course",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCourseInputBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Course"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a new course",
+        "tags": [
+          "Courses"
+        ]
+      }
+    },
+    "/api/v1/organizations/{orgSlug}/courses/{courseSlug}": {
+      "delete": {
+        "operationId": "delete-course",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course slug",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course slug",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteCourseOutputBody"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Delete course",
+        "tags": [
+          "Courses"
+        ]
+      },
+      "get": {
+        "operationId": "get-course",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course slug",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course slug",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseWithSections"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get course details",
+        "tags": [
+          "Courses"
+        ]
+      },
+      "patch": {
+        "operationId": "update-course",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course slug",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course slug",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCourseInputBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Course"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update course",
+        "tags": [
+          "Courses"
+        ]
+      }
+    },
+    "/api/v1/organizations/{orgSlug}/courses/{courseSlug}/lessons/{lessonId}": {
+      "get": {
+        "operationId": "get-lesson",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course slug",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Lesson UUID",
+            "in": "path",
+            "name": "lessonId",
+            "required": true,
+            "schema": {
+              "description": "Lesson UUID",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LessonDetail"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get lesson details",
+        "tags": [
+          "Lessons"
+        ]
+      }
+    },
+    "/api/v1/organizations/{orgSlug}/courses/{courseSlug}/lessons/{lessonId}/narration": {
+      "get": {
+        "description": "The lesson's slides with their narration as sentences, each with its spoken form after the course's pronunciations and the ranges that map spoken words back to displayed ones. Offsets are UTF-16 code units.",
+        "operationId": "get-lesson-narration",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course slug",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Lesson UUID",
+            "in": "path",
+            "name": "lessonId",
+            "required": true,
+            "schema": {
+              "description": "Lesson UUID",
+              "type": "string"
+            }
+          },
+          {
+            "description": "BCP-47 language, such as en-US; default the course's default language",
+            "explode": false,
+            "in": "query",
+            "name": "lang",
+            "schema": {
+              "description": "BCP-47 language, such as en-US; default the course's default language",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NarrationOutputBody"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get a lesson's narration",
+        "tags": [
+          "Lessons"
+        ]
+      }
+    },
+    "/api/v1/organizations/{orgSlug}/courses/{courseSlug}/lessons/{lessonId}/play": {
+      "get": {
+        "description": "A short-lived URL that serves the lesson's deck for a sandboxed frame.",
+        "operationId": "get-lesson-play",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course slug",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Lesson UUID",
+            "in": "path",
+            "name": "lessonId",
+            "required": true,
+            "schema": {
+              "description": "Lesson UUID",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlayOutputBody"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get a signed deck URL for a lesson",
+        "tags": [
+          "Lessons"
+        ]
+      }
+    },
+    "/api/v1/organizations/{orgSlug}/courses/{courseSlug}/lessons/{lessonId}/quiz": {
+      "delete": {
+        "description": "Deletes the quiz and all associated results for the specified lesson",
+        "operationId": "delete-quiz",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course slug",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Lesson UUID",
+            "in": "path",
+            "name": "lessonId",
+            "required": true,
+            "schema": {
+              "description": "Lesson UUID",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteQuizOutputBody"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Delete a quiz",
+        "tags": [
+          "Quizzes"
+        ]
+      },
+      "get": {
+        "description": "Retrieves the quiz associated with a lesson, including user's results if authenticated",
+        "operationId": "get-quiz",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course slug",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Lesson UUID",
+            "in": "path",
+            "name": "lessonId",
+            "required": true,
+            "schema": {
+              "description": "Lesson UUID",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuizWithResults"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get quiz for a lesson",
+        "tags": [
+          "Quizzes"
+        ]
+      },
+      "patch": {
+        "description": "Updates the quiz for the specified lesson",
+        "operationId": "update-quiz",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course slug",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Lesson UUID",
+            "in": "path",
+            "name": "lessonId",
+            "required": true,
+            "schema": {
+              "description": "Lesson UUID",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateQuizInputBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Quiz"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update a quiz",
+        "tags": [
+          "Quizzes"
+        ]
+      },
+      "post": {
+        "description": "Creates a new quiz for the specified lesson. Only one quiz per lesson is allowed.",
+        "operationId": "create-quiz",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course slug",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Lesson UUID",
+            "in": "path",
+            "name": "lessonId",
+            "required": true,
+            "schema": {
+              "description": "Lesson UUID",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateQuizInputBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Quiz"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a quiz for a lesson",
+        "tags": [
+          "Quizzes"
+        ]
+      }
+    },
+    "/api/v1/organizations/{orgSlug}/courses/{courseSlug}/package": {
+      "get": {
+        "description": "The files the course was last applied from, by path and checksum, and the course's revision. Files come from the files route.",
+        "operationId": "get-course-package",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PackageOutputBody"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get a course's package manifest",
+        "tags": [
+          "Course packages"
+        ]
+      },
+      "put": {
+        "description": "Proposes a course-spec package by manifest. While files are missing the response lists their checksums; upload them, then repeat. With every file present the package is validated with course-spec and applied in one transaction, creating the course if needed. Lessons are matched by ID, so learners keep their progress.",
+        "operationId": "put-course-package",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course ID from course.json",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course ID from course.json",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutPackageInputBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PutPackageOutputBody"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Upload a course package",
+        "tags": [
+          "Course packages"
+        ]
+      }
+    },
+    "/api/v1/organizations/{orgSlug}/courses/{courseSlug}/publish": {
+      "post": {
+        "operationId": "publish-course",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course slug",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course slug",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Course"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Publish a course",
+        "tags": [
+          "Courses"
+        ]
+      }
+    },
+    "/api/v1/organizations/{orgSlug}/courses/{courseSlug}/sections": {
+      "post": {
+        "operationId": "create-section",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course slug",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course slug",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSectionInputBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Section"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a new section in a course",
+        "tags": [
+          "Sections"
+        ]
+      }
+    },
+    "/api/v1/organizations/{orgSlug}/courses/{courseSlug}/sections/reorder": {
+      "post": {
+        "operationId": "reorder-sections",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course slug",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course slug",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReorderSectionsInputBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReorderSectionsOutputBody"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Reorder sections in a course",
+        "tags": [
+          "Sections"
+        ]
+      }
+    },
+    "/api/v1/organizations/{orgSlug}/courses/{courseSlug}/sections/{sectionId}": {
+      "delete": {
+        "operationId": "delete-section",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course slug",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Section UUID",
+            "in": "path",
+            "name": "sectionId",
+            "required": true,
+            "schema": {
+              "description": "Section UUID",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteSectionOutputBody"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Delete a section",
+        "tags": [
+          "Sections"
+        ]
+      },
+      "patch": {
+        "operationId": "update-section",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course slug",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Section UUID",
+            "in": "path",
+            "name": "sectionId",
+            "required": true,
+            "schema": {
+              "description": "Section UUID",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSectionInputBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Section"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update a section",
+        "tags": [
+          "Sections"
+        ]
+      }
+    },
+    "/api/v1/organizations/{orgSlug}/courses/{courseSlug}/sections/{sectionId}/lessons": {
+      "post": {
+        "operationId": "create-lesson",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course slug",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Section UUID",
+            "in": "path",
+            "name": "sectionId",
+            "required": true,
+            "schema": {
+              "description": "Section UUID",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateLessonInputBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Lesson"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a new lesson in a section",
+        "tags": [
+          "Lessons"
+        ]
+      }
+    },
+    "/api/v1/organizations/{orgSlug}/courses/{courseSlug}/sections/{sectionId}/lessons/reorder": {
+      "post": {
+        "operationId": "reorder-lessons",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course slug",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Section UUID",
+            "in": "path",
+            "name": "sectionId",
+            "required": true,
+            "schema": {
+              "description": "Section UUID",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReorderLessonsInputBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReorderLessonsOutputBody"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Reorder lessons in a section",
+        "tags": [
+          "Lessons"
+        ]
+      }
+    },
+    "/api/v1/organizations/{orgSlug}/courses/{courseSlug}/sections/{sectionId}/lessons/{lessonId}": {
+      "delete": {
+        "operationId": "delete-lesson",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course slug",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Section UUID",
+            "in": "path",
+            "name": "sectionId",
+            "required": true,
+            "schema": {
+              "description": "Section UUID",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Lesson UUID",
+            "in": "path",
+            "name": "lessonId",
+            "required": true,
+            "schema": {
+              "description": "Lesson UUID",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteLessonOutputBody"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Delete a lesson",
+        "tags": [
+          "Lessons"
+        ]
+      },
+      "patch": {
+        "operationId": "update-lesson",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course slug",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Section UUID",
+            "in": "path",
+            "name": "sectionId",
+            "required": true,
+            "schema": {
+              "description": "Section UUID",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Lesson UUID",
+            "in": "path",
+            "name": "lessonId",
+            "required": true,
+            "schema": {
+              "description": "Lesson UUID",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateLessonInputBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Lesson"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update a lesson",
+        "tags": [
+          "Lessons"
+        ]
+      }
+    },
+    "/api/v1/organizations/{orgSlug}/courses/{courseSlug}/versions": {
+      "get": {
+        "operationId": "list-course-versions",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course slug",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by status",
+            "explode": false,
+            "in": "query",
+            "name": "status",
+            "schema": {
+              "description": "Filter by status",
+              "enum": [
+                "",
+                "draft",
+                "published",
+                "deprecated"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Page size",
+            "explode": false,
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "default": 20,
+              "description": "Page size",
+              "format": "int64",
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Page offset",
+            "explode": false,
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "default": 0,
+              "description": "Page offset",
+              "format": "int64",
+              "minimum": 0,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListCourseVersionsOutputBody"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "List course versions",
+        "tags": [
+          "Versions"
+        ]
+      },
+      "post": {
+        "operationId": "create-course-version",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course slug",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course slug",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCourseVersionInputBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseVersionAPI"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a new course version",
+        "tags": [
+          "Versions"
+        ]
+      }
+    },
+    "/api/v1/organizations/{orgSlug}/courses/{courseSlug}/versions/{versionId}": {
+      "get": {
+        "operationId": "get-course-version",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course slug",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Version UUID",
+            "in": "path",
+            "name": "versionId",
+            "required": true,
+            "schema": {
+              "description": "Version UUID",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseVersionWithUpdates"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get course version details",
+        "tags": [
+          "Versions"
+        ]
+      },
+      "patch": {
+        "operationId": "update-course-version",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course slug",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Version UUID",
+            "in": "path",
+            "name": "versionId",
+            "required": true,
+            "schema": {
+              "description": "Version UUID",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCourseVersionInputBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseVersionAPI"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update a draft course version",
+        "tags": [
+          "Versions"
+        ]
+      }
+    },
+    "/api/v1/organizations/{orgSlug}/courses/{courseSlug}/versions/{versionId}/publish": {
+      "post": {
+        "operationId": "publish-course-version",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course slug",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Version UUID",
+            "in": "path",
+            "name": "versionId",
+            "required": true,
+            "schema": {
+              "description": "Version UUID",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseVersionAPI"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Publish a course version",
+        "tags": [
+          "Versions"
+        ]
+      }
+    },
+    "/api/v1/organizations/{orgSlug}/courses/{courseSlug}/versions/{versionId}/updates": {
+      "post": {
+        "operationId": "add-content-update",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course slug",
+            "in": "path",
+            "name": "courseSlug",
+            "required": true,
+            "schema": {
+              "description": "Course slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Version UUID",
+            "in": "path",
+            "name": "versionId",
+            "required": true,
+            "schema": {
+              "description": "Version UUID",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddContentUpdateInputBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContentUpdateAPI"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Add content update to a version",
+        "tags": [
+          "Versions"
+        ]
+      }
+    },
+    "/api/v1/organizations/{orgSlug}/files/{sha256}": {
+      "get": {
+        "operationId": "get-package-file",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The file's SHA-256, lowercase hex",
+            "in": "path",
+            "name": "sha256",
+            "required": true,
+            "schema": {
+              "description": "The file's SHA-256, lowercase hex",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "contentEncoding": "base64",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "OK",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Download a package file",
+        "tags": [
+          "Course packages"
+        ]
+      },
+      "put": {
+        "description": "Stores a file by its SHA-256 for the organization's course packages. The content must match the checksum. Up to 20 MB.",
+        "operationId": "put-package-file",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The file's SHA-256, lowercase hex",
+            "in": "path",
+            "name": "sha256",
+            "required": true,
+            "schema": {
+              "description": "The file's SHA-256, lowercase hex",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "contentMediaType": "application/octet-stream",
+                "format": "binary",
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Upload a package file",
+        "tags": [
+          "Course packages"
+        ]
+      }
+    },
+    "/api/v1/organizations/{orgSlug}/pronunciations": {
+      "get": {
+        "description": "How narration says terms in every course of the academy, by term and language, in the shape of a course's pronunciations.json. A course's own pronunciations come first, then these, then the platform's.",
+        "operationId": "get-academy-pronunciations",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AcademyPronunciationsOutputBody"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get an academy's pronunciations",
+        "tags": [
+          "Pronunciations"
+        ]
+      },
+      "put": {
+        "description": "Replaces every pronunciation of the academy with the ones given. An empty respelling says the term as written, overriding the platform's.",
+        "operationId": "put-academy-pronunciations",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutAcademyPronunciationsInputBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AcademyPronunciationsOutputBody"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Replace an academy's pronunciations",
+        "tags": [
+          "Pronunciations"
+        ]
+      }
+    },
+    "/api/v1/organizations/{orgSlug}/pronunciations/review": {
+      "get": {
+        "description": "Every pronunciation narration can apply in the academy's courses (the platform's, the academy's and each course's own), with where a higher layer replaces it and the lessons whose narration says it.",
+        "operationId": "review-academy-pronunciations",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PronunciationReviewOutputBody"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Review an academy's pronunciations",
+        "tags": [
+          "Pronunciations"
+        ]
+      }
+    },
+    "/api/v1/organizations/{orgSlug}/pronunciations/suggest": {
+      "post": {
+        "description": "Reads IPA, such as Wikipedia's /ˌlæmbərˈɡiːni/ or Italian: [ferˈruttʃo], and respellings such as LAM-bər-GHEE-nee, and suggests respellings for a speech engine, word by word, to play and choose from. Other languages' IPA is brought to the nearest English sounds.",
+        "operationId": "suggest-pronunciations",
+        "parameters": [
+          {
+            "description": "Organization slug",
+            "in": "path",
+            "name": "orgSlug",
+            "required": true,
+            "schema": {
+              "description": "Organization slug",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SuggestPronunciationsInputBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuggestPronunciationsOutputBody"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Suggest respellings from IPA or a dictionary respelling",
+        "tags": [
+          "Pronunciations"
+        ]
+      }
+    },
+    "/api/v1/users/me": {
+      "get": {
+        "operationId": "get-current-user",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserWithMemberships"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get current user profile",
+        "tags": [
+          "Users"
+        ]
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://app.academyos.io"
+    }
+  ]
+}

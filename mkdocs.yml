@@ -1,0 +1,62 @@
+site_name: AcademyOS Go SDK
+site_description: The Go SDK and command line for AcademyOS, and the AcademyOS API reference
+site_url: https://academyosio.github.io/academyos-go/
+repo_url: https://github.com/academyosio/academyos-go
+repo_name: academyosio/academyos-go
+edit_uri: edit/main/docs/
+
+docs_dir: docs
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Command Line: cli.md
+  - Go SDK: sdk.md
+  - AI Agents: agents.md
+  - API Reference:
+      - Overview: api.md
+      - Reference (Scalar): api-reference/index.html
+  - Design:
+      - Product Requirements: specs/initiatives/INIT-ACADEMYOSGO-001/PRD.md
+      - Technical Requirements: specs/initiatives/INIT-ACADEMYOSGO-001/TRD.md
+      - Plan: specs/initiatives/INIT-ACADEMYOSGO-001/PLAN.md
+      - Roadmap: specs/initiatives/INIT-ACADEMYOSGO-001/ROADMAP.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/academyosio/academyos-go
+
+markdown_extensions:
+  - admonition
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
