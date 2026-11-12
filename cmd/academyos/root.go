@@ -73,6 +73,10 @@ func exitCode(err error) int {
 	if errors.As(err, &ve) {
 		return exitValidation
 	}
+	var lc *academyos.LocalChangesError
+	if errors.As(err, &lc) {
+		return exitStale
+	}
 	var ae *academyos.APIError
 	if errors.As(err, &ae) {
 		switch {
