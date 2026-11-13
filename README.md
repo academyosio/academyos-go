@@ -52,8 +52,8 @@ Commit that file: the next push sends the revision, and if the course
 changed in the academy since then, the push is refused instead of
 overwriting those edits.
 
-`pull` writes the academy's copy of the course, such as pronunciations or
-narration changed there, into the directory, and records the academy's
+`pull` writes the academy's copy of the course, as it was last pushed, into
+the directory, such as after another author pushed, and records the academy's
 revision in `published.json`. It refuses to overwrite files with
 uncommitted changes unless you pass `--force`, so commit first and review
 what came down with `git diff`. Outside git, any differing file needs

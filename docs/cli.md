@@ -41,9 +41,9 @@ recorded the academy's IDs in published.json
 
 ### Pulling a course
 
-`pull` brings changes made in the academy, such as pronunciations or
-narration edited there, back into the course directory, so they can be
-committed and reviewed like any other change. It writes the files that
+`pull` brings the academy's copy of the course, as it was last pushed, into
+the course directory: to start on a new machine, or after another author
+pushed. Review what came down like any other change. It writes the files that
 differ from the academy's copy, leaves files that exist only here alone,
 and records the academy's revision in `published.json`, so the next push
 isn't refused as stale.
