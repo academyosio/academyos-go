@@ -44,7 +44,9 @@ academyos version
 Every command takes `--format json`.
 
 `push` uploads only files the academy doesn't have, applies the whole course
-in one step, and matches lessons by ID, so learners keep their progress. It
+in one step, and matches lessons by ID, so learners keep their progress.
+Recorded narration beside a deck (`deck/recordings/`, written by
+videoascode) is pushed with it, so AcademyOS plays the recorded voice. It
 writes the academy's IDs and revision to the course's `published.json`.
 Commit that file: the next push sends the revision, and if the course
 changed in the academy since then, the push is refused instead of
@@ -119,7 +121,7 @@ res, err := c.Push(ctx, "courses/building-web-apis", academyos.PushOptions{})
 | Package | Purpose |
 | --- | --- |
 | `academyos` | The client: `Me`, `Push`, `PublishCourse`, and the package and file calls |
-| `coursepkg` | The files a course-spec directory needs, with checksums and a package root that includes a shared theme |
+| `coursepkg` | The files a course-spec directory needs, including recorded narration, with checksums and a package root that includes a shared theme |
 
 ## API Reference
 
