@@ -38,3 +38,17 @@ academyos course publish courses/building-web-apis
 
 Then commit the course's updated `published.json`. See
 [Command Line](cli.md) for every command and exit code.
+
+## Pull changes made in the academy
+
+When pronunciations or narration are edited in AcademyOS, bring them back
+into the repository:
+
+```bash
+git status                                    # commit or stash your own edits first
+academyos course pull courses/building-web-apis
+git diff                                      # review, then commit
+```
+
+`pull` needs a key with `courses:read`. It refuses to overwrite uncommitted
+changes; see [Pulling a course](cli.md#pulling-a-course).
