@@ -14,6 +14,7 @@ import (
 	"strings"
 
 	coursespec "github.com/academyosio/course-spec"
+	"github.com/academyosio/course-spec/deck"
 )
 
 // Limits match the server's.
@@ -57,7 +58,8 @@ func (p *Package) File(sum string) (File, bool) {
 // Build loads the course at dir and lists the files it needs:
 // course.json, pronunciations, the description, thumbnail and certificate
 // template, each released section's manifest, quiz and text lessons, each
-// deck with its transcript and the files it loads, and the theme. It
+// deck with its transcript, recordings and the files it loads, and the
+// theme. It
 // leaves out published.json and build output.
 func Build(dir string) (*Package, error) {
 	courseDir, err := filepath.Abs(dir)
@@ -134,6 +136,9 @@ func Build(dir string) (*Package, error) {
 				add(filepath.Join(filepath.Dir(deckPath), filepath.FromSlash(r.Path())))
 			}
 		}
+		if err := addRecordings(filepath.Dir(deckPath), s.Recordings, add); err != nil {
+			return nil, err
+		}
 	}
 
 	paths := make([]string, 0, len(set))
@@ -172,6 +177,27 @@ func Build(dir string) (*Package, error) {
 	}
 	sort.Slice(pkg.Files, func(i, j int) bool { return pkg.Files[i].Path < pkg.Files[j].Path })
 	return pkg, nil
+}
+
+// addRecordings adds the deck's recordings index and every audio and
+// captions file it names. A recording whose paths leave recordings/ is an
+// error; a missing file is reported when the package is hashed.
+func addRecordings(deckDir string, r *deck.Recordings, add func(string)) error {
+	if r == nil {
+		return nil
+	}
+	add(filepath.Join(deckDir, filepath.FromSlash(deck.RecordingsFile)))
+	dir := filepath.Join(deckDir, deck.RecordingsDir)
+	for _, rec := range r.Lessons {
+		if err := rec.CheckPaths(); err != nil {
+			return fmt.Errorf("%s: lesson %s (%s): %w", filepath.Join(deckDir, filepath.FromSlash(deck.RecordingsFile)), rec.Lesson, rec.Language, err)
+		}
+		add(filepath.Join(dir, filepath.FromSlash(rec.Audio)))
+		if rec.Captions != "" {
+			add(filepath.Join(dir, filepath.FromSlash(rec.Captions)))
+		}
+	}
+	return nil
 }
 
 // addTree adds every regular file under dir, skipping hidden files; a

@@ -7,7 +7,7 @@ go get github.com/academyosio/academyos-go
 | Package | Purpose |
 | --- | --- |
 | `academyos` | The client: `Me`, `Push`, `PublishCourse`, pronunciations, and the package and file calls |
-| `coursepkg` | The files a course-spec directory needs, with checksums and a package root that includes a shared theme |
+| `coursepkg` | The files a course-spec directory needs, including recorded narration, with checksums and a package root that includes a shared theme |
 
 ## Create a client
 
