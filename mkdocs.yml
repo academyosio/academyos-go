@@ -40,6 +40,9 @@ nav:
   - API Reference:
       - Overview: api.md
       - Reference (Scalar): api-reference/index.html
+  - Release Notes:
+      - v0.1.0: releases/v0.1.0.md
+  - Changelog: changelog.md
   - Design:
       - Product Requirements: specs/initiatives/INIT-ACADEMYOSGO-001/PRD.md
       - Technical Requirements: specs/initiatives/INIT-ACADEMYOSGO-001/TRD.md

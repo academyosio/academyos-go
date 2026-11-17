@@ -1,0 +1,99 @@
+{
+  "irVersion": "1.0",
+  "project": "academyos-go",
+  "repository": "https://github.com/academyosio/academyos-go",
+  "versioning": "semver",
+  "commitConvention": "conventional",
+  "maintainers": [
+    "grokify"
+  ],
+  "releases": [
+    {
+      "version": "v0.1.0",
+      "date": "2026-11-16",
+      "highlights": [
+        {
+          "description": "The `academyos` command line: keep a course as a course-spec directory in git, then check it, push it with its slide decks, translations, quizzes and recorded narration, pull the academy's copy back, and publish it",
+          "commit": "30377cb"
+        },
+        {
+          "description": "The Go SDK, `github.com/academyosio/academyos-go/academyos`: an API client with typed errors for the public AcademyOS API, and `coursepkg` for course-spec directories",
+          "commit": "8d05ed4"
+        }
+      ],
+      "added": [
+        {
+          "description": "`academyos whoami`: the key's principal, academy and scopes",
+          "commit": "30377cb"
+        },
+        {
+          "description": "`academyos course validate`: check a course directory, exiting 2 on errors",
+          "commit": "30377cb"
+        },
+        {
+          "description": "`academyos course push`: validate, upload only the files the academy lacks, apply the course, and record the academy's IDs in the directory; `--dry-run` reports what would change",
+          "commit": "5b3e44e"
+        },
+        {
+          "description": "`academyos course publish`: publish a pushed course",
+          "commit": "30377cb"
+        },
+        {
+          "description": "`academyos course pull`: write the academy's copy of a course, as last pushed, into its directory, or into an empty one with `--course`; `--dry-run` lists the changes and `--force` overwrites local changes",
+          "commit": "e76eb80"
+        },
+        {
+          "description": "`academyos pronunciations push` and `get`: replace and print an academy's pronunciations, with a diff and `--dry-run`",
+          "commit": "f3dbd8e"
+        },
+        {
+          "description": "`academyos version`, reporting the module version it was built from",
+          "commit": "30377cb"
+        },
+        {
+          "description": "`academyos` package: `New` with `Options` (API key, URL), typed API errors, course push, publish and pull, pronunciations, and lower-level calls; plain http is allowed only to `localhost`, `.localhost` names and loopback addresses",
+          "commit": "8d05ed4"
+        },
+        {
+          "description": "`coursepkg`: the files a course-spec directory needs, including each deck's recorded narration in `recordings/`",
+          "commit": "3ab0549"
+        },
+        {
+          "description": "The public AcademyOS API's OpenAPI document, in `openapi/`",
+          "commit": "0f7ca46"
+        }
+      ],
+      "tests": [
+        {
+          "description": "The client, course packages, push, pull into empty and git-tracked directories, pronunciation diffs and dry runs, and the CLI; every client request is checked against the public API document",
+          "commit": "040ed7d"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "A documentation site with getting started, command line, Go SDK and AI agent guides, and the API reference rendered with Scalar",
+          "commit": "8530825"
+        },
+        {
+          "description": "INIT-ACADEMYOSGO-001 requirements, design, plan and roadmap",
+          "commit": "84787d7"
+        },
+        {
+          "description": "v0.1.0 release notes"
+        }
+      ],
+      "infrastructure": [
+        {
+          "description": "CI tests on Linux, macOS and Windows, lints, and builds the docs site",
+          "commit": "a2c3fce"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Requires `github.com/academyosio/course-spec` v0.2.0, for recorded narration",
+          "commit": "ca8e6fd"
+        }
+      ]
+    }
+  ]
+}
