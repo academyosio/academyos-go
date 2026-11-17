@@ -34,6 +34,8 @@ academyos whoami                       # who the key acts for, its academy and s
 academyos course validate <dir>        # check a course; exits 2 on errors
 academyos course push <dir>            # validate, upload what the academy lacks, apply
 academyos course push --dry-run <dir>  # report what would change
+academyos course pull <dir>            # write the academy's copy of the course here
+academyos course pull --course <id> <dir>  # pull a course into an empty directory
 academyos course publish <dir>         # publish the course
 academyos pronunciations push [path]   # replace the academy's pronunciations
 academyos pronunciations push --dry-run [path]  # list what would change
@@ -50,6 +52,13 @@ Commit that file: the next push sends the revision, and if the course
 changed in the academy since then, the push is refused instead of
 overwriting those edits.
 
+`pull` writes the academy's copy of the course, as it was last pushed, into
+the directory, such as after another author pushed, and records the academy's
+revision in `published.json`. It refuses to overwrite files with
+uncommitted changes unless you pass `--force`, so commit first and review
+what came down with `git diff`. Outside git, any differing file needs
+`--force`.
+
 `pronunciations push` sends a `pronunciations.json`, by default the one in
 the current directory, usually the course repository's root, as the
 academy's pronunciations. Narration applies a course's own
@@ -65,7 +74,7 @@ Exit codes:
 | 0 | Success |
 | 1 | Failure: network, server, or usage |
 | 2 | The course has validation errors |
-| 3 | The academy's copy is newer, or the course exists without a package: pull first, or pass `--force` |
+| 3 | The academy's copy is newer, or the course exists without a package: pull first, or pass `--force`. For `pull`, files changed here would be overwritten |
 | 4 | The API key is missing, invalid, expired, or not allowed |
 
 ## For AI Agents
