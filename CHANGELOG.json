@@ -10,7 +10,7 @@
   "releases": [
     {
       "version": "v0.1.0",
-      "date": "2026-11-16",
+      "date": "2026-11-18",
       "highlights": [
         {
           "description": "The `academyos` command line: keep a course as a course-spec directory in git, then check it, push it with its slide decks, translations, quizzes and recorded narration, pull the academy's copy back, and publish it",
@@ -92,6 +92,10 @@
         {
           "description": "Requires `github.com/academyosio/course-spec` v0.2.0, for recorded narration",
           "commit": "ca8e6fd"
+        },
+        {
+          "description": "Update `golang.org/x/net` to v0.63.0",
+          "commit": "811e887"
         }
       ]
     }
