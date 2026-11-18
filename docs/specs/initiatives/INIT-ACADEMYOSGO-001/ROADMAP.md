@@ -24,7 +24,7 @@ commits implementing one carry the trailer `Refs: RMI-ACADEMYOSGO-<NNN>`.
 
 **Theme:** Changes flow both ways, and our own courses prove it before release.
 
-- [ ] `RMI-ACADEMYOSGO-006` Pull with protection for local edits
+- [x] `RMI-ACADEMYOSGO-006` Pull with protection for local edits
   - Depends on: `RMI-ACADEMYOSGO-003`
 - [ ] `RMI-ACADEMYOSGO-007` Status: local and academy changes, with course-spec lesson status
   - Depends on: `RMI-ACADEMYOSGO-003`

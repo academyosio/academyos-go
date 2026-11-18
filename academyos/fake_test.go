@@ -19,6 +19,8 @@ type fakeServer struct {
 	files    map[string][]byte
 	revision int
 	puts     []PutPackageRequest
+	// manifest is the last applied package's.
+	manifest *Manifest
 	// conflict, when set, answers every package PUT with this code.
 	conflict string
 	// pronunciations is the academy's, and pronunciationPuts counts
@@ -45,6 +47,22 @@ func (f *fakeServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	switch {
 	case r.URL.Path == "/api/v1/users/me":
 		writeJSONBody(f.t, w, Me{Name: "Test", Email: "t@example.com", APIKey: &APIKey{OrganizationSlug: "acme", Scopes: []string{"courses:write"}}})
+	case strings.HasPrefix(r.URL.Path, "/api/v1/organizations/acme/files/") && r.Method == http.MethodGet:
+		data, ok := f.files[strings.TrimPrefix(r.URL.Path, "/api/v1/organizations/acme/files/")]
+		if !ok {
+			w.WriteHeader(http.StatusNotFound)
+			return
+		}
+		if _, err := w.Write(data); err != nil {
+			f.t.Error(err)
+		}
+	case r.URL.Path == "/api/v1/organizations/acme/courses/building-web-apis/package" && r.Method == http.MethodGet:
+		if f.manifest == nil {
+			w.WriteHeader(http.StatusNotFound)
+			writeJSONBody(f.t, w, map[string]any{"code": "no_package", "message": "push one"})
+			return
+		}
+		writeJSONBody(f.t, w, Package{CourseID: "c-1", Revision: f.revision, Manifest: *f.manifest})
 	case strings.HasPrefix(r.URL.Path, "/api/v1/organizations/acme/files/"):
 		sum := strings.TrimPrefix(r.URL.Path, "/api/v1/organizations/acme/files/")
 		data, err := io.ReadAll(r.Body)
@@ -81,6 +99,8 @@ func (f *fakeServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 		if !req.DryRun {
 			f.revision++
+			m := req.Manifest
+			f.manifest = &m
 		}
 		writeJSONBody(f.t, w, PutPackageResponse{
 			Applied: !req.DryRun, DryRun: req.DryRun, CourseID: "c-1", Revision: f.revision,

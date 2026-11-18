@@ -38,3 +38,17 @@ academyos course publish courses/building-web-apis
 
 Then commit the course's updated `published.json`. See
 [Command Line](cli.md) for every command and exit code.
+
+## Pull the academy's copy
+
+To start from the course as it was last pushed, such as on a new machine or
+after another author pushed:
+
+```bash
+git status                                    # commit or stash your own edits first
+academyos course pull courses/building-web-apis
+git diff                                      # review, then commit
+```
+
+`pull` needs a key with `courses:read`. It refuses to overwrite uncommitted
+changes; see [Pulling a course](cli.md#pulling-a-course).

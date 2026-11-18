@@ -53,6 +53,9 @@ func TestExitCodes(t *testing.T) {
 			t.Errorf("exitCode(%v) = %d, want %d", err, got, want)
 		}
 	}
+	if got := exitCode(&academyos.LocalChangesError{Paths: []string{"course.json"}}); got != exitStale {
+		t.Errorf("local changes exit = %d", got)
+	}
 	if got := exitCode(&academyos.APIError{Status: 422, Code: "invalid_course"}); got != exitValidation {
 		t.Errorf("invalid_course exit = %d", got)
 	}

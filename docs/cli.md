@@ -5,6 +5,8 @@ academyos whoami                       # who the key acts for, its academy and s
 academyos course validate <dir>        # check a course; exits 2 on errors
 academyos course push <dir>            # validate, upload what the academy lacks, apply
 academyos course push --dry-run <dir>  # report what would change
+academyos course pull <dir>            # write the academy's copy of the course here
+academyos course pull --course <id> <dir>  # pull a course into an empty directory
 academyos course publish <dir>         # publish the course
 academyos pronunciations push [path]   # replace the academy's pronunciations
 academyos pronunciations push --dry-run [path]  # list what would change
@@ -17,7 +19,9 @@ Every command takes `--format json`.
 ## Courses
 
 `push` uploads only files the academy doesn't have, applies the whole course
-in one step, and matches lessons by ID, so learners keep their progress. It
+in one step, and matches lessons by ID, so learners keep their progress.
+Recorded narration beside a deck (`deck/recordings/`, written by
+videoascode) is pushed with it, so AcademyOS plays the recorded voice. It
 writes the academy's IDs and revision to the course's `published.json`.
 Commit that file: the next push sends the revision, and if the course
 changed in the academy since then, the push is refused instead of
@@ -37,6 +41,37 @@ applied becoming-a-product-builder to https://app.academyos.io in productbuilder
 recorded the academy's IDs in published.json
 ```
 
+### Pulling a course
+
+`pull` brings the academy's copy of the course, as it was last pushed, into
+the course directory: to start on a new machine, or after another author
+pushed. Review what came down like any other change. It writes the files that
+differ from the academy's copy, leaves files that exist only here alone,
+and records the academy's revision in `published.json`, so the next push
+isn't refused as stale.
+
+```bash
+git commit -am "Before pulling"   # pull refuses to overwrite uncommitted changes
+academyos course pull --dry-run courses/becoming-a-product-builder
+academyos course pull courses/becoming-a-product-builder
+git diff                          # review what came down
+```
+
+| Flag | Meaning |
+| --- | --- |
+| `--course <id>` | The course to pull, for an empty directory; otherwise the ID in `course.json` |
+| `--dry-run` | List the files that would be added or updated, writing nothing |
+| `--force` | Overwrite local changes |
+
+Pull protects your edits. In a git repository, it refuses to overwrite a
+file with uncommitted changes, lists them, and exits with code 3; commit or
+stash them, or pass `--force`. Outside git, it can't tell your edits from the
+academy's, so any file that differs needs `--force`.
+
+The directory is the course's own. A course kept at `courses/<id>` in its
+repository is pulled into `repo/courses/<id>`, where shared files such as a
+theme beside it are written too.
+
 ## Pronunciations
 
 `pronunciations push` sends a `pronunciations.json`, by default the one in
@@ -54,5 +89,5 @@ file leaves out. An empty respelling says the term as written.
 | 0 | Success |
 | 1 | Failure: network, server, or usage |
 | 2 | The course has validation errors |
-| 3 | The academy's copy is newer, or the course exists without a package: pull first, or pass `--force` |
+| 3 | The academy's copy is newer, or the course exists without a package: pull first, or pass `--force`. For `pull`, files changed here would be overwritten |
 | 4 | The API key is missing, invalid, expired, or not allowed |

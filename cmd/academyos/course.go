@@ -16,7 +16,7 @@ func newCourseCommand(g *globals) *cobra.Command {
 		Use:   "course",
 		Short: "Work with course-spec courses",
 	}
-	cmd.AddCommand(newValidateCommand(g), newPushCommand(g), newPublishCommand(g))
+	cmd.AddCommand(newValidateCommand(g), newPushCommand(g), newPullCommand(g), newPublishCommand(g))
 	return cmd
 }
 
@@ -136,6 +136,76 @@ func printPush(w io.Writer, base string, r *academyos.PushResult) {
 	}
 	if resp.Applied {
 		fmt.Fprintln(w, "recorded the academy's IDs in published.json")
+	}
+}
+
+func newPullCommand(g *globals) *cobra.Command {
+	var opts academyos.PullOptions
+	cmd := &cobra.Command{
+		Use:   "pull <dir>",
+		Short: "Write the academy's copy of a course into its directory",
+		Long: "pull downloads the files the academy has for the course in <dir> that differ here, writes them in place, " +
+			"and records the academy's revision in published.json. Files only here are left alone. " +
+			"It refuses to overwrite files with uncommitted changes, or, outside git, any differing file, unless --force is given. " +
+			"Commit first, then review what changed with git diff. " +
+			"Pass --course to pull a course into an empty directory; the directory is the course's, so a course kept at " +
+			"courses/<id> in its repository is pulled into repo/courses/<id>.",
+		Args: cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			c, err := g.client()
+			if err != nil {
+				return err
+			}
+			opts.Org = g.org
+			errOut := cmd.ErrOrStderr()
+			if !g.json() {
+				opts.Progress = func(msg string) { fmt.Fprintln(errOut, msg) }
+			}
+			res, err := c.Pull(cmd.Context(), args[0], opts)
+			out := cmd.OutOrStdout()
+			if err != nil {
+				var lc *academyos.LocalChangesError
+				if errors.As(err, &lc) {
+					if g.json() {
+						if werr := writeJSON(out, map[string]any{"local_changes": lc.Paths, "not_in_git": lc.NotInGit}); werr != nil {
+							return errors.Join(err, werr)
+						}
+					} else {
+						for _, p := range lc.Paths {
+							fmt.Fprintln(out, "  changed here:", p)
+						}
+					}
+				}
+				return err
+			}
+			if g.json() {
+				return writeJSON(out, res)
+			}
+			printPull(out, c.BaseURL(), res)
+			return nil
+		},
+	}
+	cmd.Flags().StringVar(&opts.CourseID, "course", "", "the course's ID, to pull into an empty directory")
+	cmd.Flags().BoolVar(&opts.DryRun, "dry-run", false, "list what would change without writing anything")
+	cmd.Flags().BoolVar(&opts.Force, "force", false, "overwrite local changes")
+	return cmd
+}
+
+func printPull(w io.Writer, base string, r *academyos.PullResult) {
+	verb := "pulled"
+	if r.DryRun {
+		verb = "would pull (dry run)"
+	}
+	fmt.Fprintf(w, "%s %s from %s in %s, revision %d\n", verb, r.CourseID, base, r.Org, r.Revision)
+	fmt.Fprintf(w, "  files  %d in the academy: %d added, %d updated, %d unchanged\n", r.Files, len(r.Added), len(r.Updated), r.Unchanged)
+	for _, p := range r.Added {
+		fmt.Fprintln(w, "  added  ", p)
+	}
+	for _, p := range r.Updated {
+		fmt.Fprintln(w, "  updated", p)
+	}
+	if !r.DryRun {
+		fmt.Fprintln(w, "recorded the academy's revision in published.json")
 	}
 }
 

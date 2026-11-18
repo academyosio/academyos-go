@@ -85,3 +85,52 @@ func TestBuildSharedTheme(t *testing.T) {
 		t.Errorf("course path %q, files:\n%s", p.CoursePath, paths(p))
 	}
 }
+
+func writeFile(t *testing.T, path, content string) {
+	t.Helper()
+	if err := os.MkdirAll(filepath.Dir(path), 0o750); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(path, []byte(content), 0o600); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestBuildRecordings(t *testing.T) {
+	dir := filepath.Join(t.TempDir(), "course")
+	copyCourse(t, dir)
+	rec := filepath.Join(dir, "sections/01-designing-endpoints/deck/recordings")
+	writeFile(t, filepath.Join(rec, "recordings.json"), `{"lessons": [{"lesson": "x", "language": "en-US",
+		"audio": "en-US/x.mp3", "captions": "en-US/x.vtt", "durationMs": 1000,
+		"slides": [{"id": "x", "startMs": 0, "durationMs": 1000, "narration": "sha256:0"}]}]}`)
+	writeFile(t, filepath.Join(rec, "en-US/x.mp3"), "mp3")
+	writeFile(t, filepath.Join(rec, "en-US/x.vtt"), "WEBVTT\n")
+	writeFile(t, filepath.Join(rec, "en-US/old.mp3"), "not listed")
+
+	p, err := Build(dir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	got := paths(p)
+	for _, want := range []string{"deck/recordings/recordings.json", "deck/recordings/en-US/x.mp3", "deck/recordings/en-US/x.vtt"} {
+		if !strings.Contains(got, "sections/01-designing-endpoints/"+want+"\n") {
+			t.Errorf("missing %s in\n%s", want, got)
+		}
+	}
+	if strings.Contains(got, "old.mp3") {
+		t.Error("a file the recordings don't list was packaged")
+	}
+
+	if err := os.Remove(filepath.Join(rec, "en-US/x.mp3")); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := Build(dir); err == nil {
+		t.Error("a missing audio file wasn't reported")
+	}
+	writeFile(t, filepath.Join(rec, "recordings.json"), `{"lessons": [{"lesson": "x", "language": "en-US",
+		"audio": "../../escape.mp3", "durationMs": 1000,
+		"slides": [{"id": "x", "startMs": 0, "durationMs": 1000, "narration": "sha256:0"}]}]}`)
+	if _, err := Build(dir); err == nil || !strings.Contains(err.Error(), "recordings directory") {
+		t.Errorf("a path leaving recordings/ = %v", err)
+	}
+}
